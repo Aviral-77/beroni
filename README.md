@@ -10,25 +10,6 @@ short, structured newsletter - plus the raw data and the newsletter in
 Excel / Word / PowerPoint.
 
 > **Pipeline / "agent" thinking:** `ingestion -> cleaning -> scoring -> newsletter`
-> - four linear, inspectable stages, each easy to reason about and tune.
-
----
-
-## Links (final deliverable)
-
-| Deliverable | Link |
-|---|---|
-| **Demo app** (Streamlit) | _<add your Streamlit Community Cloud URL here after deploying - see [Deploy](#deploy-the-demo-app)>_ |
-| **Source code** (GitHub) | _<this repository>_ |
-| **Raw data** (CSV / JSON) | [`data/outputs/`](data/outputs/) |
-| **Newsletter** (Excel / Word / PPT / Markdown) | [`data/outputs/`](data/outputs/) |
-
-> The repository ships a ready-to-run sample so reviewers can see every output
-> immediately, and the app is one-click deployable. The live demo URL requires
-> connecting the repo to a host (Streamlit Cloud) under your own account -
-> instructions below.
-
----
 
 ## Architecture
 
