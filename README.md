@@ -166,3 +166,22 @@ beroni/
 ├── docs/                   # pipeline and architecture notes
 └── requirements.txt
 ```
+
+---
+
+## Things to note
+
+- Coverage is only as good as the public feeds; private or paywalled deals are
+  out of scope.
+- Deal value and parties come from regex, so they can be partial. The source link
+  is always there to verify.
+- Credibility scores the source's standing, not whether a specific claim is true.
+- Google News RSS can rate-limit or change format; the trade-press feeds act as a
+  steady backup.
+
+## Possible improvements
+
+- Add more sources and region-specific queries (e.g. India, Europe).
+- Smarter entity extraction (an NER model) instead of capitalised-token heuristics.
+- A lightweight cache or database to track deals over time instead of per-run only.
+- Optional email or Slack delivery of the finished newsletter.
