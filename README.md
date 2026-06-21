@@ -48,7 +48,7 @@ flowchart LR
     N[4 · Newsletter<br/>rank → lead/brief<br/>summarise<br/>methodology]
 
     I --> C --> S --> N
-    LLM([Optional: Claude<br/>writes summaries]) -.-> N
+    LLM([Optional: LLM<br/>writes summaries]) -.-> N
     SAMPLE([Sample fallback<br/>if feeds blocked]) -.-> I
 
     N --> O[Streamlit app +<br/>CSV · JSON · XLSX · DOCX · PPTX]
@@ -116,9 +116,9 @@ explained by the `matched_*` fields attached to each article):
 Ranks by a composite of **relevance (45%), credibility (30%), recency (15%),
 corroboration (10%)**, splits into **lead deals** and an *"also in the news"*
 tail, writes a per-deal summary, and appends an at-a-glance intro and a
-**methodology footer**. Summaries are written by **Claude** (`claude-opus-4-8`)
-when an `ANTHROPIC_API_KEY` is present, with a **transparent template fallback**
-so the demo is fully functional with zero credentials.
+**methodology footer**. Summaries are written by an LLM when an `LLM_API_KEY`
+is present, with a **transparent template fallback** so the demo is fully
+functional with zero credentials.
 
 ---
 
@@ -160,12 +160,13 @@ python scripts/run_pipeline.py --no-llm --days 7 --min-relevance 40
 
 Outputs are written to `data/outputs/` (CSV, JSON, XLSX, DOCX, PPTX, MD).
 
-**Optional — Claude-written summaries:** set `ANTHROPIC_API_KEY` (and optionally
-`FMCG_LLM_MODEL`, default `claude-opus-4-8`). Without a key the app uses template
+**Optional — LLM-written summaries:** set `LLM_API_KEY` and `FMCG_LLM_MODEL`
+(the model identifier for your LLM provider). Without a key the app uses template
 summaries and works exactly the same otherwise.
 
 ```bash
-export ANTHROPIC_API_KEY=sk-ant-...
+export LLM_API_KEY=your-api-key-here
+export FMCG_LLM_MODEL=your-model-name-here
 ```
 
 ---
@@ -177,8 +178,8 @@ export ANTHROPIC_API_KEY=sk-ant-...
 1. Push this repo to GitHub.
 2. Go to [share.streamlit.io](https://share.streamlit.io) → **New app** → pick
    this repo, branch, and `app.py`.
-3. *(Optional)* add `ANTHROPIC_API_KEY` under **Advanced settings → Secrets** to
-   enable Claude summaries.
+3. *(Optional)* add `LLM_API_KEY` and `FMCG_LLM_MODEL` under **Advanced settings → Secrets** to
+   enable LLM summaries.
 4. Deploy, then paste the resulting URL into the [Links](#-links-final-deliverable)
    table above.
 
@@ -198,7 +199,7 @@ beroni/
 │   ├── ingest.py           # Stage 1 — RSS/Atom ingestion (stdlib parser)
 │   ├── clean.py            # Stage 2 — exact + near-duplicate de-duplication
 │   ├── score.py            # Stage 3 — relevance + credibility + fact extraction
-│   ├── newsletter.py       # Stage 4 — ranking, summaries (Claude/template), draft
+│   ├── newsletter.py       # Stage 4 — ranking, summaries (LLM/template), draft
 │   ├── exporters.py        # CSV / JSON / Excel / Word / PowerPoint
 │   └── pipeline.py         # the "agent" — orchestrates the four stages
 ├── data/

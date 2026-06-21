@@ -13,7 +13,7 @@ with st.sidebar:
     data_mode = st.radio("Data source", ["Live news feeds", "Bundled sample"])
     lookback = st.slider("Look-back window (days)", 3, 30, config.THRESHOLDS["lookback_days"])
     min_rel = st.slider("Minimum relevance score", 0, 100, config.THRESHOLDS["min_relevance"], step=5)
-    use_llm = st.toggle("Use Claude for summaries", value=True)
+    use_llm = st.toggle("Use LLM for summaries", value=True)
     run = st.button("🚀 Run pipeline", type="primary", use_container_width=True)
     st.markdown("---")
     st.markdown(
@@ -64,7 +64,7 @@ c2.metric("After dedup", s.get("after_near_dedup", 0),
 c3.metric("Relevant", s.get("relevant", 0),
           delta=f"-{s.get('filtered_out', 0)} filtered", delta_color="off")
 c4.metric("Lead deals", nl["counts"]["lead"])
-c5.metric("Summaries", "Claude" if nl["llm_used"] else "Template")
+c5.metric("Summaries", "LLM" if nl["llm_used"] else "Template")
 
 tab_news, tab_data, tab_logic, tab_dl = st.tabs(
     ["📰 Newsletter", "🔢 Raw data", "🧠 Pipeline logic", "⬇️ Downloads"]
@@ -130,6 +130,6 @@ with tab_dl:
 st.markdown("---")
 st.caption(
     f"Generated {nl['generated_at'][:19]}Z · "
-    f"{'Claude-written' if nl['llm_used'] else 'template'} summaries · "
+    f"{'LLM-written' if nl['llm_used'] else 'template'} summaries · "
     "Decision-support only, not investment advice."
 )

@@ -14,7 +14,7 @@ and the README.
    article (`matched_deal_terms`, `corroborating_sources`, …).
 3. **Robust to a restricted host** — the core logic is pure standard library;
    the only network dependency (RSS) degrades gracefully to a bundled dataset.
-4. **Optional intelligence, never required** — Claude improves the prose when a
+4. **Optional intelligence, never required** — an LLM improves the prose when a
    key is present; the system is fully functional without it.
 
 ## Data model

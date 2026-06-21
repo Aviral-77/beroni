@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 
 from . import config
 
-LLM_MODEL = os.environ.get("FMCG_LLM_MODEL", "claude-opus-4-8")
+LLM_MODEL = os.environ.get("FMCG_LLM_MODEL", "")
 _WS = re.compile(r"\s+")
 
 
@@ -32,7 +32,8 @@ def _template_summary(art):
 
 
 def _llm_summaries(lead_articles):
-    if not os.environ.get("ANTHROPIC_API_KEY"):
+    api_key = os.environ.get("LLM_API_KEY")
+    if not api_key or not LLM_MODEL:
         return None
     try:
         import anthropic
@@ -63,7 +64,7 @@ def _llm_summaries(lead_articles):
 
     try:
         import json
-        client = anthropic.Anthropic()
+        client = anthropic.Anthropic(api_key=api_key)
         resp = client.messages.create(
             model=LLM_MODEL, max_tokens=2000,
             system=system, messages=[{"role": "user", "content": user}],
@@ -159,9 +160,9 @@ def build_newsletter(scored, stage_stats=None, lookback_days=None, use_llm=True)
         f"Items below {config.THRESHOLDS['min_relevance']}/100 are dropped.",
         "Credibility: source-tier allow-list + corroboration bonus − lone press-release penalty.",
         "Ranking: relevance 45%, credibility 30%, recency 15%, corroboration 10%.",
-        ("Summaries: Claude (" + LLM_MODEL + ") from sourced material; no facts added."
+        ("Summaries: LLM-generated from sourced material; no facts added."
          if llm_used else
-         "Summaries: template from extracted deal facts + source blurb (no LLM key set)."),
+         "Summaries: template from extracted deal facts + source blurb (no LLM_API_KEY set)."),
         "Deal value/parties are regex heuristics and may be incomplete. Decision-support only.",
     ]
 
