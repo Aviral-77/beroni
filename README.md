@@ -32,7 +32,8 @@ Excel / Word / PowerPoint.
 
 ## Architecture
 
-![Architecture](assets/architecture.svg)
+<!-- ![Architecture](assets/architecture.svg) -->
+![Architecture](assets/image.png)
 
 ```mermaid
 flowchart LR
