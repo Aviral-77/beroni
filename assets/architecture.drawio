@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- Title -->
+    <mxCell id="100" value="FMCG Deal Intelligence - Pipeline Architecture" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;fontColor=#1F4E79;" vertex="1" parent="1">
+      <mxGeometry x="327" y="40" width="1000" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- === SOURCES GROUP === -->
+    <mxCell id="200" value="Public Sources" style="swimlane;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+      <mxGeometry x="60" y="160" width="240" height="200" as="geometry" />
+    </mxCell>
+
+    <mxCell id="201" value="Google News RSS&#xa;(deal queries)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="200">
+      <mxGeometry x="20" y="50" width="200" height="55" as="geometry" />
+    </mxCell>
+
+    <mxCell id="202" value="FMCG Trade Press&#xa;(Food Dive, Just-Food, etc.)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="200">
+      <mxGeometry x="20" y="125" width="200" height="55" as="geometry" />
+    </mxCell>
+
+    <!-- === STAGE 1: INGEST === -->
+    <mxCell id="300" value="Stage 1: Ingest&#xa;&#xa;- Fetch RSS/Atom feeds&#xa;- Parse with stdlib XML&#xa;- Resolve publisher&#xa;- Date filter (lookback)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F4E79;strokeColor=#1F4E79;fontColor=#ffffff;fontSize=12;fontStyle=1;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="400" y="140" width="210" height="140" as="geometry" />
+    </mxCell>
+
+    <!-- === STAGE 2: CLEAN === -->
+    <mxCell id="400" value="Stage 2: Clean&#xa;&#xa;- Exact dedup (URL + title)&#xa;- Near-dup merge by&#xa;  entity overlap&#xa;- Union-find clustering" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F4E79;strokeColor=#1F4E79;fontColor=#ffffff;fontSize=12;fontStyle=1;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="680" y="140" width="210" height="140" as="geometry" />
+    </mxCell>
+
+    <!-- === STAGE 3: SCORE === -->
+    <mxCell id="500" value="Stage 3: Score&#xa;&#xa;- Relevance (deal + FMCG&#xa;  signals, title x2)&#xa;- Credibility (source tier&#xa;  + corroboration bonus)&#xa;- Extract deal facts" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F4E79;strokeColor=#1F4E79;fontColor=#ffffff;fontSize=12;fontStyle=1;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="960" y="140" width="210" height="140" as="geometry" />
+    </mxCell>
+
+    <!-- === STAGE 4: NEWSLETTER === -->
+    <mxCell id="600" value="Stage 4: Newsletter&#xa;&#xa;- Rank by composite score&#xa;- Split lead / brief&#xa;- Write summaries&#xa;- Add methodology footer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F4E79;strokeColor=#1F4E79;fontColor=#ffffff;fontSize=12;fontStyle=1;verticalAlign=top;" vertex="1" parent="1">
+      <mxGeometry x="1240" y="140" width="210" height="140" as="geometry" />
+    </mxCell>
+
+    <!-- === OUTPUTS GROUP === -->
+    <mxCell id="700" value="Outputs" style="swimlane;startSize=30;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=13;" vertex="1" parent="1">
+      <mxGeometry x="1100" y="400" width="380" height="280" as="geometry" />
+    </mxCell>
+
+    <mxCell id="701" value="Streamlit App&#xa;(live demo + downloads)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;" vertex="1" parent="700">
+      <mxGeometry x="20" y="45" width="160" height="50" as="geometry" />
+    </mxCell>
+
+    <mxCell id="702" value="CSV / JSON&#xa;(raw data)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;" vertex="1" parent="700">
+      <mxGeometry x="200" y="45" width="160" height="50" as="geometry" />
+    </mxCell>
+
+    <mxCell id="703" value="Excel (.xlsx)&#xa;Newsletter + Raw data" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;" vertex="1" parent="700">
+      <mxGeometry x="20" y="115" width="160" height="50" as="geometry" />
+    </mxCell>
+
+    <mxCell id="704" value="Word (.docx)&#xa;Newsletter" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;" vertex="1" parent="700">
+      <mxGeometry x="200" y="115" width="160" height="50" as="geometry" />
+    </mxCell>
+
+    <mxCell id="705" value="PowerPoint (.pptx)&#xa;Newsletter slides" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;" vertex="1" parent="700">
+      <mxGeometry x="20" y="185" width="160" height="50" as="geometry" />
+    </mxCell>
+
+    <mxCell id="706" value="Markdown (.md)&#xa;Newsletter" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=11;" vertex="1" parent="700">
+      <mxGeometry x="200" y="185" width="160" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- === OPTIONAL: LLM === -->
+    <mxCell id="800" value="LLM API&#xa;(optional summaries)&#xa;set LLM_API_KEY" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="1240" y="400" width="210" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- === OPTIONAL: SAMPLE FALLBACK === -->
+    <mxCell id="900" value="Sample dataset&#xa;(fallback if feeds blocked)&#xa;data/sample_articles.json" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;fontStyle=2;" vertex="1" parent="1">
+      <mxGeometry x="400" y="400" width="210" height="70" as="geometry" />
+    </mxCell>
+
+    <!-- === ARROWS: main flow === -->
+    <!-- Sources -> Ingest -->
+    <mxCell id="E1" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1F4E79;strokeWidth=2;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="200" target="300" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Ingest -> Clean -->
+    <mxCell id="E2" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1F4E79;strokeWidth=2;" edge="1" source="300" target="400" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Clean -> Score -->
+    <mxCell id="E3" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1F4E79;strokeWidth=2;" edge="1" source="400" target="500" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Score -> Newsletter -->
+    <mxCell id="E4" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#1F4E79;strokeWidth=2;" edge="1" source="500" target="600" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Newsletter -> Outputs -->
+    <mxCell id="E5" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#82b366;strokeWidth=2;" edge="1" source="600" target="700" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- === ARROWS: optional (dotted) === -->
+    <!-- LLM -> Newsletter -->
+    <mxCell id="E6" value="optional" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;strokeWidth=1.5;dashed=1;fontSize=10;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" source="800" target="600" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- Sample fallback -> Ingest -->
+    <mxCell id="E7" value="fallback" style="edgeStyle=orthogonalEdgeStyle;html=1;strokeColor=#d6b656;strokeWidth=1.5;dashed=1;fontSize=10;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" source="900" target="300" parent="1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+    <!-- === LEGEND === -->
+    <mxCell id="L0" value="Legend" style="swimlane;startSize=25;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="60" y="450" width="300" height="160" as="geometry" />
+    </mxCell>
+
+    <mxCell id="L1" value="" style="rounded=1;fillColor=#1F4E79;strokeColor=#1F4E79;" vertex="1" parent="L0">
+      <mxGeometry x="20" y="40" width="30" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="L1T" value="Pipeline stage" style="text;html=1;strokeColor=none;fillColor=none;fontSize=11;" vertex="1" parent="L0">
+      <mxGeometry x="60" y="40" width="180" height="20" as="geometry" />
+    </mxCell>
+
+    <mxCell id="L2" value="" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="L0">
+      <mxGeometry x="20" y="75" width="30" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="L2T" value="Data sources group" style="text;html=1;strokeColor=none;fillColor=none;fontSize=11;" vertex="1" parent="L0">
+      <mxGeometry x="60" y="75" width="180" height="20" as="geometry" />
+    </mxCell>
+
+    <mxCell id="L3" value="" style="rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="L0">
+      <mxGeometry x="20" y="110" width="30" height="20" as="geometry" />
+    </mxCell>
+    <mxCell id="L3T" value="Optional component (dashed arrow)" style="text;html=1;strokeColor=none;fillColor=none;fontSize=11;" vertex="1" parent="L0">
+      <mxGeometry x="60" y="110" width="220" height="20" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>
