@@ -100,12 +100,7 @@ streamlit run app.py
 
 or generate the files from the command line:
 
-```bash
-python scripts/run_pipeline.py            # live feeds, falls back to sample
-python scripts/run_pipeline.py --sample   # use the bundled sample data
-```
-
-Outputs land in `data/outputs/`.
+Outputs in `data/outputs/`.
 
 LLM summaries are optional. To turn them on, set `LLM_API_KEY` and
 `FMCG_LLM_MODEL`. Without them the app uses template summaries and works the same

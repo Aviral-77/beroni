@@ -145,7 +145,7 @@ functional with zero credentials.
 ## Run it locally
 
 ```bash
-git clone <this-repo>
+git clone https://github.com/Aviral-77/beroni.git
 cd beroni
 pip install -r requirements.txt
 
