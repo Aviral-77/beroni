@@ -10,7 +10,6 @@ st.caption("Real-time M&A and investment newsletter for fast-moving consumer goo
 
 with st.sidebar:
     st.header("Controls")
-    data_mode = st.radio("Data source", ["Live news feeds", "Bundled sample"])
     lookback = st.slider("Look-back window (days)", 3, 30, config.THRESHOLDS["lookback_days"])
     min_rel = st.slider("Minimum relevance score", 0, 100, config.THRESHOLDS["min_relevance"], step=5)
     use_llm = st.toggle("Use LLM for summaries", value=True)
@@ -26,10 +25,11 @@ with st.sidebar:
 
 
 @st.cache_data(show_spinner=False, ttl=900)
-def _run(use_live, lookback, min_rel, use_llm):
+def _run(lookback, min_rel, use_llm):
     result = pipeline.run_pipeline(
-        use_live=use_live, lookback_days=lookback,
-        min_relevance=min_rel, use_llm=use_llm,
+        lookback_days=lookback,
+        min_relevance=min_rel,
+        use_llm=use_llm,
     )
     md = newsletter.to_markdown(result.newsletter)
     files = exporters.export_all(result.newsletter, result.articles)
@@ -37,11 +37,8 @@ def _run(use_live, lookback, min_rel, use_llm):
 
 
 if run or "result" not in st.session_state:
-    with st.spinner("Running pipeline..."):
-        result, md, files = _run(
-            use_live=(data_mode == "Live news feeds"),
-            lookback=lookback, min_rel=min_rel, use_llm=use_llm,
-        )
+    with st.spinner("Fetching live feeds and running pipeline..."):
+        result, md, files = _run(lookback=lookback, min_rel=min_rel, use_llm=use_llm)
     st.session_state.update(result=result, md=md, files=files)
 
 result = st.session_state["result"]
@@ -50,11 +47,14 @@ files = st.session_state["files"]
 nl = result.newsletter
 s = result.stage_stats
 
-if result.source == "sample":
-    st.info("Using the bundled sample dataset (live feeds blocked or sample mode selected).")
+ok_feeds = sum(1 for f in result.fetch_log if f["status"] == "ok")
+if ok_feeds == 0:
+    st.error(
+        "Could not reach any RSS feeds. Check your internet connection and try again. "
+        "If the problem persists, some feeds may be temporarily unavailable."
+    )
 else:
-    ok = sum(1 for f in result.fetch_log if f["status"] == "ok")
-    st.success(f"Live mode - pulled from {ok} feed(s).")
+    st.success(f"Live mode - pulled from {ok_feeds} feed(s).")
 
 st.subheader("Pipeline funnel")
 c1, c2, c3, c4, c5 = st.columns(5)
@@ -71,7 +71,13 @@ tab_news, tab_data, tab_logic, tab_dl = st.tabs(
 )
 
 with tab_news:
-    st.markdown(md, unsafe_allow_html=True)
+    if not nl["lead_deals"]:
+        st.warning(
+            "No relevant FMCG deals found. Try lowering the minimum relevance score "
+            "or increasing the look-back window."
+        )
+    else:
+        st.markdown(md, unsafe_allow_html=True)
 
 with tab_data:
     cols = [
@@ -80,8 +86,11 @@ with tab_data:
         "corroboration_count", "cluster_size", "published", "url",
     ]
     df = pd.DataFrame(result.articles)
-    df = df[[c for c in cols if c in df.columns]]
-    st.dataframe(df, use_container_width=True, height=460)
+    if not df.empty:
+        df = df[[c for c in cols if c in df.columns]]
+        st.dataframe(df, use_container_width=True, height=460)
+    else:
+        st.info("No articles to display.")
 
 with tab_logic:
     st.markdown("#### How each stage works")
@@ -103,30 +112,33 @@ with tab_logic:
         st.dataframe(pd.DataFrame(result.fetch_log), use_container_width=True)
 
 with tab_dl:
-    mimes = {
-        "csv": "text/csv",
-        "json": "application/json",
-        "xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        "docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        "pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-    }
-    labels = {
-        "csv": "Raw data (CSV)", "json": "Raw data (JSON)",
-        "xlsx": "Newsletter (Excel)", "docx": "Newsletter (Word)",
-        "pptx": "Newsletter (PowerPoint)",
-    }
-    cols = st.columns(len(files))
-    for col, (name, data) in zip(cols, files.items()):
-        ext = name.rsplit(".", 1)[-1]
-        col.download_button(
-            labels.get(ext, name), data=data, file_name=name,
-            mime=mimes.get(ext, "application/octet-stream"),
-            use_container_width=True,
+    if result.articles:
+        mimes = {
+            "csv": "text/csv",
+            "json": "application/json",
+            "xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            "docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        }
+        labels = {
+            "csv": "Raw data (CSV)", "json": "Raw data (JSON)",
+            "xlsx": "Newsletter (Excel)", "docx": "Newsletter (Word)",
+            "pptx": "Newsletter (PowerPoint)",
+        }
+        dl_cols = st.columns(len(files))
+        for col, (name, data) in zip(dl_cols, files.items()):
+            ext = name.rsplit(".", 1)[-1]
+            col.download_button(
+                labels.get(ext, name), data=data, file_name=name,
+                mime=mimes.get(ext, "application/octet-stream"),
+                use_container_width=True,
+            )
+        st.download_button(
+            "Newsletter (Markdown)", data=md.encode("utf-8"),
+            file_name="fmcg_newsletter.md", mime="text/markdown",
         )
-    st.download_button(
-        "Newsletter (Markdown)", data=md.encode("utf-8"),
-        file_name="fmcg_newsletter.md", mime="text/markdown",
-    )
+    else:
+        st.info("No data to download. Run the pipeline with live feeds first.")
 
 st.markdown("---")
 st.caption(

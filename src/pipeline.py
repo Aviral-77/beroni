@@ -12,23 +12,14 @@ class PipelineResult:
     source: str = "live"
 
 
-def run_pipeline(*, use_live=True, lookback_days=None, min_relevance=None,
-                 use_llm=True, sources=None, fallback_to_sample=True):
+def run_pipeline(*, lookback_days=None, min_relevance=None,
+                 use_llm=True, sources=None):
     lookback_days = lookback_days if lookback_days is not None else config.THRESHOLDS["lookback_days"]
     if min_relevance is not None:
         config.THRESHOLDS["min_relevance"] = min_relevance
 
-    # Stage 1: Ingest
-    source = "live"
-    if use_live:
-        articles, fetch_log = ingest.ingest(sources=sources, lookback_days=lookback_days)
-        if not articles and fallback_to_sample:
-            sample_articles, sample_log = ingest.load_sample()
-            articles, fetch_log = sample_articles, fetch_log + sample_log
-            source = "sample"
-    else:
-        articles, fetch_log = ingest.load_sample()
-        source = "sample"
+    # Stage 1: Ingest from live feeds only
+    articles, fetch_log = ingest.ingest(sources=sources, lookback_days=lookback_days)
 
     # Stage 2: De-duplicate
     deduped, dedup_stats = clean.deduplicate(articles)
@@ -56,5 +47,5 @@ def run_pipeline(*, use_live=True, lookback_days=None, min_relevance=None,
         newsletter=draft,
         stage_stats=stage_stats,
         fetch_log=fetch_log,
-        source=source,
+        source="live",
     )
