@@ -29,6 +29,50 @@ no heavyweight/compiled dependencies. Each item is normalised to
 `{title, summary, url, publisher, source_domain, published}` and filtered to a
 look-back window.
 
+#### How the live data is fetched (no API key, no scraping)
+
+The pipeline pulls **public RSS feeds** only. There is no paid API and no HTML
+scraping - just structured XML that is free and stable.
+
+**1. Google News RSS (the main source).** Google News exposes a hidden RSS
+endpoint for *any* search query, with no API key. The URL format is:
+
+```
+https://news.google.com/rss/search?q=FMCG+acquisition&hl=en-US&gl=US&ceid=US:en
+```
+
+For each phrase in `GOOGLE_NEWS_QUERIES` (`src/config.py`) - `FMCG acquisition`,
+`consumer goods acquisition`, `FMCG private equity stake`, and so on - the code
+builds one of these URLs. Google does the web-wide searching and hands back an
+XML list of matching articles, each with its title, link, date, and the
+**original publisher** (Reuters, Food Dive, etc.), which is exactly what the
+credibility scorer needs.
+
+**2. Direct trade-press feeds.** `DIRECT_FEEDS` (`src/config.py`) is a fixed list
+of FMCG industry sites that publish their own RSS (Food Dive, Just-Food, Beverage
+Daily, etc.) for clean, on-topic coverage.
+
+The fetch path in `src/ingest.py` is:
+
+```
+ingest()                       # loops over every feed
+  -> fetch_raw(url)            # HTTP GET -> raw XML bytes
+       -> parse_feed(raw, ...) # stdlib xml.etree -> list of articles
+            -> date filter      # drop anything older than the look-back window
+```
+
+`fetch_raw()` does a plain `requests.get()` with a browser-like User-Agent and a
+15-second timeout. `parse_feed()` reads each `<item>` with the standard-library
+XML parser (no `feedparser` dependency) and normalises it to
+`{id, title, summary, url, publisher, source_domain, published}`.
+
+**Why RSS:** it is free and keyless, it does not break on site redesigns the way
+scraping does, it avoids paywalls, and Google does the heavy discovery work and
+attributes each story to its real publisher. To change coverage you only edit
+`src/config.py`: add or edit query strings, point `google_news_rss()` at another
+region/language (e.g. `gl=IN, hl=en-IN`), or drop a new feed URL into
+`DIRECT_FEEDS`.
+
 ### 2 · Cleaning & de-duplication - `src/clean.py`
 The same deal is reported by many outlets; we want each **deal** once, while
 remembering how many independent outlets covered it.
