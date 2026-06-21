@@ -1,125 +1,117 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="660" viewBox="0 0 1160 660" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" width="1340" height="640" viewBox="0 0 1340 640" font-family="Segoe UI, Helvetica, Arial, sans-serif">
   <defs>
     <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
       <path d="M0,0 L8,3 L0,6 Z" fill="#1F4E79"/>
     </marker>
-    <style>
-      .stage  { fill:#1F4E79; }
-      .stagel { fill:#ffffff; font-size:17px; font-weight:700; }
-      .stages { fill:#cfe0f2; font-size:11px; }
-      .box    { fill:#F4F6F9; stroke:#c9d4e2; stroke-width:1.5; }
-      .boxt   { fill:#1A1A1A; font-size:12px; }
-      .boxh   { fill:#1F4E79; font-size:13px; font-weight:700; }
-      .small  { fill:#5b6b7d; font-size:11px; }
-      .flow   { stroke:#1F4E79; stroke-width:2.2; fill:none; }
-      .opt    { fill:#fbf3e6; stroke:#e0b96a; stroke-width:1.5; }
-      .opth   { fill:#9a6b12; font-size:12px; font-weight:700; }
-    </style>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#82b366"/>
+    </marker>
+    <marker id="arrowYellow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#d6b656"/>
+    </marker>
   </defs>
 
-  <text x="40" y="44" font-size="26" font-weight="700" fill="#1F4E79">FMCG Deal Intelligence - Pipeline Architecture</text>
-  <text x="40" y="68" font-size="14" fill="#5b6b7d">ingestion → cleaning → scoring → newsletter · a minimal, inspectable "agent" flow</text>
+  <rect x="0" y="0" width="1340" height="640" fill="#ffffff"/>
 
-  <!-- SOURCES -->
-  <rect class="box" x="40" y="110" width="200" height="150" rx="10"/>
-  <text class="boxh" x="60" y="135">Public sources</text>
-  <text class="boxt" x="60" y="160">• Google News RSS</text>
-  <text class="boxt" x="60" y="180">  (deal queries)</text>
-  <text class="boxt" x="60" y="202">• FMCG trade press</text>
-  <text class="boxt" x="60" y="222">  (Food Dive, Just-Food…)</text>
-  <text class="small" x="60" y="246">No paywalled / private data</text>
+  <!-- Title -->
+  <text x="670" y="38" text-anchor="middle" font-size="20" font-weight="bold" fill="#1F4E79">FMCG Deal Intelligence - Pipeline Architecture</text>
 
-  <!-- STAGE 1 INGEST -->
-  <rect class="stage" x="300" y="110" width="170" height="150" rx="10"/>
-  <text class="stagel" x="320" y="138">1 · Ingest</text>
-  <text class="stages" x="320" y="162">requests + xml.etree</text>
-  <text class="stages" x="320" y="182">parse RSS/Atom</text>
-  <text class="stages" x="320" y="202">resolve publisher</text>
-  <text class="stages" x="320" y="222">date-filter window</text>
-  <text class="stages" x="320" y="244">→ normalised articles</text>
+  <!-- Sources group -->
+  <rect x="20" y="80" width="220" height="180" rx="6" fill="#dae8fc" stroke="#6c8ebf"/>
+  <text x="130" y="102" text-anchor="middle" font-size="13" font-weight="bold" fill="#1F4E79">Public Sources</text>
+  <rect x="35" y="118" width="190" height="55" rx="6" fill="#ffffff" stroke="#6c8ebf"/>
+  <text x="130" y="141" text-anchor="middle" font-size="11" fill="#222">Google News RSS</text>
+  <text x="130" y="157" text-anchor="middle" font-size="11" fill="#222">(deal queries)</text>
+  <rect x="35" y="185" width="190" height="55" rx="6" fill="#ffffff" stroke="#6c8ebf"/>
+  <text x="130" y="208" text-anchor="middle" font-size="11" fill="#222">FMCG Trade Press</text>
+  <text x="130" y="224" text-anchor="middle" font-size="11" fill="#222">(Food Dive, Just-Food)</text>
 
-  <!-- STAGE 2 CLEAN -->
-  <rect class="stage" x="500" y="110" width="170" height="150" rx="10"/>
-  <text class="stagel" x="520" y="138">2 · Clean</text>
-  <text class="stages" x="520" y="162">exact dedup</text>
-  <text class="stages" x="520" y="182">(URL + title norm)</text>
-  <text class="stages" x="520" y="202">near-dup clustering</text>
-  <text class="stages" x="520" y="222">entity-overlap +</text>
-  <text class="stages" x="520" y="242">union-find → merge</text>
+  <!-- Stage boxes -->
+  <g font-size="11" fill="#ffffff">
+    <rect x="300" y="95" width="210" height="150" rx="8" fill="#1F4E79"/>
+    <text x="405" y="118" text-anchor="middle" font-size="13" font-weight="bold">Stage 1: Ingest</text>
+    <text x="405" y="148" text-anchor="middle">- Fetch RSS/Atom feeds</text>
+    <text x="405" y="166" text-anchor="middle">- Parse with stdlib XML</text>
+    <text x="405" y="184" text-anchor="middle">- Resolve publisher</text>
+    <text x="405" y="202" text-anchor="middle">- Date filter (lookback)</text>
 
-  <!-- STAGE 3 SCORE -->
-  <rect class="stage" x="700" y="110" width="170" height="150" rx="10"/>
-  <text class="stagel" x="720" y="138">3 · Score</text>
-  <text class="stages" x="720" y="162">relevance (deal ∧</text>
-  <text class="stages" x="720" y="182">FMCG, gated)</text>
-  <text class="stages" x="720" y="202">credibility (tiers +</text>
-  <text class="stages" x="720" y="222">corroboration)</text>
-  <text class="stages" x="720" y="242">extract deal facts</text>
+    <rect x="545" y="95" width="210" height="150" rx="8" fill="#1F4E79"/>
+    <text x="650" y="118" text-anchor="middle" font-size="13" font-weight="bold">Stage 2: Clean</text>
+    <text x="650" y="148" text-anchor="middle">- Exact dedup (URL + title)</text>
+    <text x="650" y="166" text-anchor="middle">- Near-dup merge by</text>
+    <text x="650" y="184" text-anchor="middle">  entity overlap</text>
+    <text x="650" y="202" text-anchor="middle">- Union-find clustering</text>
 
-  <!-- STAGE 4 NEWSLETTER -->
-  <rect class="stage" x="900" y="110" width="170" height="150" rx="10"/>
-  <text class="stagel" x="920" y="138">4 · Newsletter</text>
-  <text class="stages" x="920" y="162">composite rank</text>
-  <text class="stages" x="920" y="182">lead + brief split</text>
-  <text class="stages" x="920" y="202">summarise items</text>
-  <text class="stages" x="920" y="222">structured draft +</text>
-  <text class="stages" x="920" y="242">methodology footer</text>
+    <rect x="790" y="95" width="210" height="150" rx="8" fill="#1F4E79"/>
+    <text x="895" y="118" text-anchor="middle" font-size="13" font-weight="bold">Stage 3: Score</text>
+    <text x="895" y="148" text-anchor="middle">- Relevance (deal + FMCG)</text>
+    <text x="895" y="166" text-anchor="middle">- Credibility (source tier</text>
+    <text x="895" y="184" text-anchor="middle">  + corroboration bonus)</text>
+    <text x="895" y="202" text-anchor="middle">- Extract deal facts</text>
 
-  <!-- flow arrows between stages -->
-  <line class="flow" x1="240" y1="185" x2="296" y2="185" marker-end="url(#arrow)"/>
-  <line class="flow" x1="470" y1="185" x2="496" y2="185" marker-end="url(#arrow)"/>
-  <line class="flow" x1="670" y1="185" x2="696" y2="185" marker-end="url(#arrow)"/>
-  <line class="flow" x1="870" y1="185" x2="896" y2="185" marker-end="url(#arrow)"/>
+    <rect x="1035" y="95" width="210" height="150" rx="8" fill="#1F4E79"/>
+    <text x="1140" y="118" text-anchor="middle" font-size="13" font-weight="bold">Stage 4: Newsletter</text>
+    <text x="1140" y="148" text-anchor="middle">- Rank by composite score</text>
+    <text x="1140" y="166" text-anchor="middle">- Split lead / brief</text>
+    <text x="1140" y="184" text-anchor="middle">- Write summaries</text>
+    <text x="1140" y="202" text-anchor="middle">- Add methodology footer</text>
+  </g>
 
-  <!-- OPTIONAL LLM -->
-  <rect class="opt" x="900" y="300" width="170" height="86" rx="10"/>
-  <text class="opth" x="920" y="324">Optional: Claude</text>
-  <text class="small" x="920" y="344">claude-opus-4-8 writes</text>
-  <text class="small" x="920" y="362">analyst summaries;</text>
-  <text class="small" x="920" y="380">template fallback if no key</text>
-  <line class="flow" x1="985" y1="300" x2="985" y2="262" marker-end="url(#arrow)" stroke-dasharray="5 4"/>
+  <!-- Main flow arrows -->
+  <line x1="240" y1="170" x2="300" y2="170" stroke="#1F4E79" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="510" y1="170" x2="545" y2="170" stroke="#1F4E79" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="755" y1="170" x2="790" y2="170" stroke="#1F4E79" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="1000" y1="170" x2="1035" y2="170" stroke="#1F4E79" stroke-width="2" marker-end="url(#arrow)"/>
 
-  <!-- FALLBACK sample -->
-  <rect class="opt" x="300" y="300" width="170" height="70" rx="10"/>
-  <text class="opth" x="320" y="324">Sample fallback</text>
-  <text class="small" x="320" y="344">bundled dataset when</text>
-  <text class="small" x="320" y="362">live feeds are blocked</text>
-  <line class="flow" x1="385" y1="300" x2="385" y2="262" marker-end="url(#arrow)" stroke-dasharray="5 4"/>
+  <!-- Optional: sample fallback -->
+  <rect x="300" y="320" width="210" height="70" rx="8" fill="#fff2cc" stroke="#d6b656"/>
+  <text x="405" y="345" text-anchor="middle" font-size="11" font-style="italic" fill="#7a5c00">Sample dataset</text>
+  <text x="405" y="361" text-anchor="middle" font-size="11" font-style="italic" fill="#7a5c00">(fallback if feeds blocked)</text>
+  <text x="405" y="377" text-anchor="middle" font-size="11" font-style="italic" fill="#7a5c00">data/sample_articles.json</text>
+  <line x1="405" y1="320" x2="405" y2="245" stroke="#d6b656" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arrowYellow)"/>
+  <text x="425" y="285" font-size="10" fill="#7a5c00">fallback</text>
 
-  <!-- OUTPUTS -->
-  <rect class="box" x="40" y="440" width="1030" height="150" rx="10"/>
-  <text class="boxh" x="60" y="466">Deliverables (Streamlit app + export layer)</text>
+  <!-- Optional: LLM -->
+  <rect x="790" y="320" width="210" height="70" rx="8" fill="#fff2cc" stroke="#d6b656"/>
+  <text x="895" y="345" text-anchor="middle" font-size="11" font-style="italic" fill="#7a5c00">LLM API</text>
+  <text x="895" y="361" text-anchor="middle" font-size="11" font-style="italic" fill="#7a5c00">(optional summaries)</text>
+  <text x="895" y="377" text-anchor="middle" font-size="11" font-style="italic" fill="#7a5c00">set LLM_API_KEY</text>
+  <path d="M895,320 L895,300 L1140,300 L1140,245" fill="none" stroke="#d6b656" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arrowYellow)"/>
+  <text x="1010" y="294" font-size="10" fill="#7a5c00">optional</text>
 
-  <rect class="box" x="64" y="486" width="150" height="86" rx="8"/>
-  <text class="boxh" x="80" y="510">Newsletter</text>
-  <text class="boxt" x="80" y="532">skimmable draft</text>
-  <text class="small" x="80" y="552">lead deals + brief</text>
+  <!-- Outputs group -->
+  <rect x="1010" y="400" width="320" height="220" rx="6" fill="#d5e8d4" stroke="#82b366"/>
+  <text x="1170" y="422" text-anchor="middle" font-size="13" font-weight="bold" fill="#2d6a2d">Outputs</text>
+  <g font-size="10.5" fill="#222">
+    <rect x="1025" y="436" width="140" height="48" rx="6" fill="#ffffff" stroke="#82b366"/>
+    <text x="1095" y="456" text-anchor="middle">Streamlit App</text>
+    <text x="1095" y="471" text-anchor="middle">(live demo + downloads)</text>
+    <rect x="1175" y="436" width="140" height="48" rx="6" fill="#ffffff" stroke="#82b366"/>
+    <text x="1245" y="456" text-anchor="middle">CSV / JSON</text>
+    <text x="1245" y="471" text-anchor="middle">(raw data)</text>
+    <rect x="1025" y="496" width="140" height="48" rx="6" fill="#ffffff" stroke="#82b366"/>
+    <text x="1095" y="516" text-anchor="middle">Excel (.xlsx)</text>
+    <text x="1095" y="531" text-anchor="middle">Newsletter + Raw data</text>
+    <rect x="1175" y="496" width="140" height="48" rx="6" fill="#ffffff" stroke="#82b366"/>
+    <text x="1245" y="516" text-anchor="middle">Word (.docx)</text>
+    <text x="1245" y="531" text-anchor="middle">Newsletter</text>
+    <rect x="1025" y="556" width="140" height="48" rx="6" fill="#ffffff" stroke="#82b366"/>
+    <text x="1095" y="576" text-anchor="middle">PowerPoint (.pptx)</text>
+    <text x="1095" y="591" text-anchor="middle">Newsletter slides</text>
+    <rect x="1175" y="556" width="140" height="48" rx="6" fill="#ffffff" stroke="#82b366"/>
+    <text x="1245" y="576" text-anchor="middle">Markdown (.md)</text>
+    <text x="1245" y="591" text-anchor="middle">Newsletter</text>
+  </g>
+  <!-- Newsletter -> Outputs -->
+  <path d="M1140,245 L1140,272 L1170,272 L1170,400" fill="none" stroke="#82b366" stroke-width="2" marker-end="url(#arrowGreen)"/>
 
-  <rect class="box" x="234" y="486" width="150" height="86" rx="8"/>
-  <text class="boxh" x="250" y="510">Raw data</text>
-  <text class="boxt" x="250" y="532">CSV · JSON</text>
-  <text class="small" x="250" y="552">scored articles</text>
-
-  <rect class="box" x="404" y="486" width="150" height="86" rx="8"/>
-  <text class="boxh" x="420" y="510">Excel</text>
-  <text class="boxt" x="420" y="532">3 sheets</text>
-  <text class="small" x="420" y="552">news · raw · method</text>
-
-  <rect class="box" x="574" y="486" width="150" height="86" rx="8"/>
-  <text class="boxh" x="590" y="510">Word</text>
-  <text class="boxt" x="590" y="532">formatted .docx</text>
-  <text class="small" x="590" y="552">business memo</text>
-
-  <rect class="box" x="744" y="486" width="150" height="86" rx="8"/>
-  <text class="boxh" x="760" y="510">PowerPoint</text>
-  <text class="boxt" x="760" y="532">slide per deal</text>
-  <text class="small" x="760" y="552">exec deck</text>
-
-  <rect class="box" x="914" y="486" width="140" height="86" rx="8"/>
-  <text class="boxh" x="930" y="510">Funnel + log</text>
-  <text class="boxt" x="930" y="532">per-stage counts</text>
-  <text class="small" x="930" y="552">transparency</text>
-
-  <line class="flow" x1="985" y1="260" x2="985" y2="410" marker-end="url(#arrow)"/>
-  <text class="small" x="995" y="425">build artefacts</text>
+  <!-- Legend -->
+  <rect x="20" y="400" width="300" height="160" rx="6" fill="#f5f5f5" stroke="#666"/>
+  <text x="170" y="422" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">Legend</text>
+  <rect x="40" y="438" width="30" height="20" rx="4" fill="#1F4E79"/>
+  <text x="80" y="453" font-size="11" fill="#333">Pipeline stage</text>
+  <rect x="40" y="473" width="30" height="20" rx="4" fill="#dae8fc" stroke="#6c8ebf"/>
+  <text x="80" y="488" font-size="11" fill="#333">Data sources group</text>
+  <rect x="40" y="508" width="30" height="20" rx="4" fill="#fff2cc" stroke="#d6b656"/>
+  <text x="80" y="523" font-size="11" fill="#333">Optional component (dashed arrow)</text>
 </svg>
