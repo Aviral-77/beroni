@@ -35,26 +35,6 @@ Excel / Word / PowerPoint.
 <!-- ![Architecture](assets/architecture.svg) -->
 ![Architecture](assets/image.png)
 
-```mermaid
-flowchart LR
-    subgraph SRC[Public sources]
-        G[Google News RSS<br/>deal queries]
-        T[FMCG trade press<br/>Food Dive, Just-Food…]
-    end
-    SRC --> I
-
-    I[1 · Ingest<br/>parse RSS/Atom<br/>resolve publisher<br/>date-filter]
-    C[2 · Clean<br/>exact dedup +<br/>near-dup merge<br/>entity overlap]
-    S[3 · Score<br/>relevance gate<br/>credibility tiers<br/>+ corroboration]
-    N[4 · Newsletter<br/>rank -> lead/brief<br/>summarise<br/>methodology]
-
-    I --> C --> S --> N
-    LLM([Optional: LLM<br/>writes summaries]) -.-> N
-    SAMPLE([Sample fallback<br/>if feeds blocked]) -.-> I
-
-    N --> O[Streamlit app +<br/>CSV · JSON · XLSX · DOCX · PPTX]
-```
-
 ---
 
 ## Pipeline explained (with the logic that matters)
