@@ -1,0 +1,712 @@
+[
+  {
+    "rank_score": 0.9251,
+    "relevance": 100,
+    "credibility": 100,
+    "is_relevant": true,
+    "deal_type": "Acquisition",
+    "deal_value": "$36 billion",
+    "acquirer": null,
+    "target": null,
+    "title": "Mars strikes $36bn deal to buy Pringles maker Kellanova",
+    "publisher": "Bloomberg",
+    "source_domain": "bloomberg.com",
+    "credibility_tier": "tier1",
+    "is_press_release": false,
+    "corroboration_count": 2,
+    "cluster_size": 3,
+    "published": "2026-06-19T09:20:00+00:00",
+    "url": "https://www.bloomberg.com/news/articles/2026-06-19/mars-kellanova-deal",
+    "matched_deal_terms": [
+      "acquisition",
+      "agreed to buy",
+      "deal",
+      "to buy"
+    ],
+    "matched_fmcg_terms": [
+      "food",
+      "kellanova"
+    ],
+    "duplicate_urls": [
+      "https://www.reuters.com/markets/deals/mars-acquire-kellanova-2026-06-19",
+      "https://www.fooddive.com/news/mars-kellanova-36-billion-takeover/2026"
+    ]
+  },
+  {
+    "rank_score": 0.8505,
+    "relevance": 94,
+    "credibility": 99,
+    "is_relevant": true,
+    "deal_type": "Acquisition",
+    "deal_value": "$1.95 billion",
+    "acquirer": null,
+    "target": null,
+    "title": "PepsiCo to acquire prebiotic soda brand poppi for $1.95 billion",
+    "publisher": "CNBC",
+    "source_domain": "cnbc.com",
+    "credibility_tier": "tier1",
+    "is_press_release": false,
+    "corroboration_count": 1,
+    "cluster_size": 2,
+    "published": "2026-06-17T13:30:00+00:00",
+    "url": "https://www.cnbc.com/2026/06/17/pepsico-poppi-acquisition.html",
+    "matched_deal_terms": [
+      "acquire"
+    ],
+    "matched_fmcg_terms": [
+      "beverage",
+      "drinks",
+      "pepsi",
+      "pepsico",
+      "soft drink"
+    ],
+    "duplicate_urls": [
+      "https://www.beveragedaily.com/article/2026/06/17/pepsico-poppi-deal"
+    ]
+  },
+  {
+    "rank_score": 0.7893,
+    "relevance": 100,
+    "credibility": 85,
+    "is_relevant": true,
+    "deal_type": "Acquisition",
+    "deal_value": "$1 billion",
+    "acquirer": null,
+    "target": null,
+    "title": "Keurig Dr Pepper acquires energy drink maker in $1 billion deal",
+    "publisher": "Food Dive",
+    "source_domain": "fooddive.com",
+    "credibility_tier": "tier2",
+    "is_press_release": false,
+    "corroboration_count": 0,
+    "cluster_size": 1,
+    "published": "2026-06-15T14:00:00+00:00",
+    "url": "https://www.fooddive.com/news/keurig-dr-pepper-energy-drink-acquisition/",
+    "matched_deal_terms": [
+      "acquire",
+      "acquires",
+      "deal"
+    ],
+    "matched_fmcg_terms": [
+      "coffee",
+      "keurig dr pepper"
+    ],
+    "duplicate_urls": []
+  },
+  {
+    "rank_score": 0.7666,
+    "relevance": 100,
+    "credibility": 85,
+    "is_relevant": true,
+    "deal_type": "Acquisition",
+    "deal_value": null,
+    "acquirer": null,
+    "target": null,
+    "title": "Beauty conglomerate acquires haircare brand to strengthen professional division",
+    "publisher": "Cosmetics Business",
+    "source_domain": "cosmeticsbusiness.com",
+    "credibility_tier": "tier2",
+    "is_press_release": false,
+    "corroboration_count": 0,
+    "cluster_size": 1,
+    "published": "2026-06-13T11:10:00+00:00",
+    "url": "https://www.cosmeticsbusiness.com/news/beauty-haircare-acquisition-2026",
+    "matched_deal_terms": [
+      "acquire",
+      "acquired",
+      "acquires"
+    ],
+    "matched_fmcg_terms": [
+      "beauty",
+      "haircare"
+    ],
+    "duplicate_urls": []
+  },
+  {
+    "rank_score": 0.755,
+    "relevance": 100,
+    "credibility": 85,
+    "is_relevant": true,
+    "deal_type": "Acquisition",
+    "deal_value": null,
+    "acquirer": null,
+    "target": null,
+    "title": "L'Oreal acquires premium skincare brand to expand dermatological beauty",
+    "publisher": "CosmeticsDesign",
+    "source_domain": "cosmeticsdesign.com",
+    "credibility_tier": "tier2",
+    "is_press_release": false,
+    "corroboration_count": 0,
+    "cluster_size": 1,
+    "published": "2026-06-12T09:05:00+00:00",
+    "url": "https://www.cosmeticsdesign.com/Article/2026/06/12/loreal-skincare-acquisition",
+    "matched_deal_terms": [
+      "acquire",
+      "acquires",
+      "invests"
+    ],
+    "matched_fmcg_terms": [
+      "beauty",
+      "cosmetics",
+      "l'oreal",
+      "skincare"
+    ],
+    "duplicate_urls": []
+  },
+  {
+    "rank_score": 0.754,
+    "relevance": 100,
+    "credibility": 95,
+    "is_relevant": true,
+    "deal_type": "Divestiture",
+    "deal_value": null,
+    "acquirer": null,
+    "target": null,
+    "title": "Nestle divests underperforming frozen food unit to focus on coffee and pet care",
+    "publisher": "Reuters",
+    "source_domain": "reuters.com",
+    "credibility_tier": "tier1",
+    "is_press_release": false,
+    "corroboration_count": 0,
+    "cluster_size": 1,
+    "published": "2026-06-09T11:40:00+00:00",
+    "url": "https://www.reuters.com/markets/deals/nestle-frozen-food-divestiture-2026",
+    "matched_deal_terms": [
+      "divest",
+      "divests"
+    ],
+    "matched_fmcg_terms": [
+      "coffee",
+      "food",
+      "frozen food",
+      "nestle",
+      "nutrition"
+    ],
+    "duplicate_urls": []
+  },
+  {
+    "rank_score": 0.738,
+    "relevance": 78,
+    "credibility": 99,
+    "is_relevant": true,
+    "deal_type": "Acquisition",
+    "deal_value": null,
+    "acquirer": null,
+    "target": null,
+    "title": "Mondelez explores potential acquisition of Hershey, sources say",
+    "publisher": "Bloomberg",
+    "source_domain": "bloomberg.com",
+    "credibility_tier": "tier1",
+    "is_press_release": false,
+    "corroboration_count": 1,
+    "cluster_size": 2,
+    "published": "2026-06-13T18:40:00+00:00",
+    "url": "https://www.bloomberg.com/news/articles/2026-06-13/mondelez-hershey-approach",
+    "matched_deal_terms": [
+      "acquisition"
+    ],
+    "matched_fmcg_terms": [
+      "chocolate",
+      "confectionery",
+      "hershey",
+      "mondelez"
+    ],
+    "duplicate_urls": [
+      "https://finance.yahoo.com/news/mondelez-hershey-takeover-interest.html"
+    ]
+  },
+  {
+    "rank_score": 0.7342,
+    "relevance": 100,
+    "credibility": 70,
+    "is_relevant": true,
+    "deal_type": "Acquisition",
+    "deal_value": null,
+    "acquirer": null,
+    "target": null,
+    "title": "Private equity firm takes majority stake in personal care brand",
+    "publisher": "City A.M.",
+    "source_domain": "cityam.com",
+    "credibility_tier": "tier3",
+    "is_press_release": false,
+    "corroboration_count": 0,
+    "cluster_size": 1,
+    "published": "2026-06-14T15:20:00+00:00",
+    "url": "https://www.cityam.com/private-equity-personal-care-stake-2026/",
+    "matched_deal_terms": [
+      "acquire",
+      "acquired",
+      "majority stake",
+      "private equity",
+      "stake"
+    ],
+    "matched_fmcg_terms": [
+      "hygiene",
+      "personal care"
+    ],
+    "duplicate_urls": []
+  },
+  {
+    "rank_score": 0.7188,
+    "relevance": 94,
+    "credibility": 85,
+    "is_relevant": true,
+    "deal_type": "Acquisition",
+    "deal_value": "$2.7 billion",
+    "acquirer": null,
+    "target": null,
+    "title": "Campbell completes $2.7 billion acquisition of premium sauce maker",
+    "publisher": "Just Food",
+    "source_domain": "just-food.com",
+    "credibility_tier": "tier2",
+    "is_press_release": false,
+    "corroboration_count": 0,
+    "cluster_size": 1,
+    "published": "2026-06-11T12:30:00+00:00",
+    "url": "https://www.just-food.com/news/campbell-sauce-acquisition-completed/",
+    "matched_deal_terms": [
+      "acquisition"
+    ],
+    "matched_fmcg_terms": [
+      "campbell",
+      "grocery"
+    ],
+    "duplicate_urls": []
+  },
+  {
+    "rank_score": 0.7157,
+    "relevance": 67,
+    "credibility": 99,
+    "is_relevant": true,
+    "deal_type": "Divestiture",
+    "deal_value": null,
+    "acquirer": null,
+    "target": null,
+    "title": "Unilever sets out plans to spin off ice cream business in stock-market listing",
+    "publisher": "Financial Times",
+    "source_domain": "ft.com",
+    "credibility_tier": "tier1",
+    "is_press_release": false,
+    "corroboration_count": 1,
+    "cluster_size": 2,
+    "published": "2026-06-16T07:45:00+00:00",
+    "url": "https://www.ft.com/content/unilever-ice-cream-spinoff-2026",
+    "matched_deal_terms": [
+      "spin off"
+    ],
+    "matched_fmcg_terms": [
+      "consumer goods",
+      "nutrition",
+      "personal care",
+      "unilever"
+    ],
+    "duplicate_urls": [
+      "https://www.just-food.com/news/unilever-ice-cream-demerger-ipo/"
+    ]
+  },
+  {
+    "rank_score": 0.7117,
+    "relevance": 76,
+    "credibility": 85,
+    "is_relevant": true,
+    "deal_type": "Funding round",
+    "deal_value": "$75 million",
+    "acquirer": null,
+    "target": null,
+    "title": "Functional beverage start-up raises $75 million Series C led by consumer fund",
+    "publisher": "FoodBev Media",
+    "source_domain": "foodbev.com",
+    "credibility_tier": "tier2",
+    "is_press_release": false,
+    "corroboration_count": 0,
+    "cluster_size": 1,
+    "published": "2026-06-18T10:00:00+00:00",
+    "url": "https://www.foodbev.com/news/functional-beverage-startup-series-c/",
+    "matched_deal_terms": [
+      "funding round",
+      "series c"
+    ],
+    "matched_fmcg_terms": [
+      "beverage",
+      "drinks"
+    ],
+    "duplicate_urls": []
+  },
+  {
+    "rank_score": 0.7064,
+    "relevance": 94,
+    "credibility": 85,
+    "is_relevant": true,
+    "deal_type": "Acquisition",
+    "deal_value": null,
+    "acquirer": null,
+    "target": null,
+    "title": "Lactalis to buy regional cheese business, expanding dairy footprint",
+    "publisher": "DairyReporter",
+    "source_domain": "dairyreporter.com",
+    "credibility_tier": "tier2",
+    "is_press_release": false,
+    "corroboration_count": 0,
+    "cluster_size": 1,
+    "published": "2026-06-10T08:50:00+00:00",
+    "url": "https://www.dairyreporter.com/Article/2026/06/10/lactalis-cheese-acquisition",
+    "matched_deal_terms": [
+      "acquire",
+      "to buy"
+    ],
+    "matched_fmcg_terms": [
+      "cheese",
+      "dairy",
+      "lactalis"
+    ],
+    "duplicate_urls": []
+  },
+  {
+    "rank_score": 0.7018,
+    "relevance": 90,
+    "credibility": 85,
+    "is_relevant": true,
+    "deal_type": "Acquisition",
+    "deal_value": null,
+    "acquirer": null,
+    "target": null,
+    "title": "Brewer agrees to acquire craft beer maker in regional consolidation",
+    "publisher": "Just Drinks",
+    "source_domain": "just-drinks.com",
+    "credibility_tier": "tier2",
+    "is_press_release": false,
+    "corroboration_count": 0,
+    "cluster_size": 1,
+    "published": "2026-06-11T14:45:00+00:00",
+    "url": "https://www.just-drinks.com/news/brewer-craft-beer-acquisition/",
+    "matched_deal_terms": [
+      "acquire"
+    ],
+    "matched_fmcg_terms": [
+      "beer",
+      "brewer"
+    ],
+    "duplicate_urls": []
+  },
+  {
+    "rank_score": 0.6722,
+    "relevance": 100,
+    "credibility": 50,
+    "is_relevant": true,
+    "deal_type": "Acquisition",
+    "deal_value": "$850 million",
+    "acquirer": null,
+    "target": null,
+    "title": "Pet food maker acquired by consumer goods group in $850 million deal",
+    "publisher": "Pet Food Industry",
+    "source_domain": "petfoodindustry.com",
+    "credibility_tier": "unknown",
+    "is_press_release": false,
+    "corroboration_count": 0,
+    "cluster_size": 1,
+    "published": "2026-06-14T10:50:00+00:00",
+    "url": "https://www.petfoodindustry.com/news/pet-food-acquisition-850-million-2026",
+    "matched_deal_terms": [
+      "acquire",
+      "acquired",
+      "deal"
+    ],
+    "matched_fmcg_terms": [
+      "consumer goods",
+      "food",
+      "pet food"
+    ],
+    "duplicate_urls": []
+  },
+  {
+    "rank_score": 0.6578,
+    "relevance": 78,
+    "credibility": 85,
+    "is_relevant": true,
+    "deal_type": "Investment",
+    "deal_value": null,
+    "acquirer": null,
+    "target": null,
+    "title": "Coca-Cola invests in dairy-alternative brand to broaden drinks portfolio",
+    "publisher": "Beverage Daily",
+    "source_domain": "beveragedaily.com",
+    "credibility_tier": "tier2",
+    "is_press_release": false,
+    "corroboration_count": 0,
+    "cluster_size": 1,
+    "published": "2026-06-12T13:15:00+00:00",
+    "url": "https://www.beveragedaily.com/article/2026/06/12/coca-cola-plant-based-investment",
+    "matched_deal_terms": [
+      "investment",
+      "invests"
+    ],
+    "matched_fmcg_terms": [
+      "coca-cola",
+      "dairy",
+      "drinks"
+    ],
+    "duplicate_urls": []
+  },
+  {
+    "rank_score": 0.6546,
+    "relevance": 82,
+    "credibility": 85,
+    "is_relevant": true,
+    "deal_type": "Acquisition",
+    "deal_value": null,
+    "acquirer": null,
+    "target": null,
+    "title": "Spirits group acquires premium tequila brand to capture agave boom",
+    "publisher": "Just Drinks",
+    "source_domain": "just-drinks.com",
+    "credibility_tier": "tier2",
+    "is_press_release": false,
+    "corroboration_count": 0,
+    "cluster_size": 1,
+    "published": "2026-06-10T13:35:00+00:00",
+    "url": "https://www.just-drinks.com/news/spirits-tequila-acquisition/",
+    "matched_deal_terms": [
+      "acquire",
+      "acquires"
+    ],
+    "matched_fmcg_terms": [
+      "spirits"
+    ],
+    "duplicate_urls": []
+  },
+  {
+    "rank_score": 0.6478,
+    "relevance": 69,
+    "credibility": 85,
+    "is_relevant": true,
+    "deal_type": "Investment",
+    "deal_value": "$40 million",
+    "acquirer": null,
+    "target": null,
+    "title": "Snack start-up secures $40m investment to expand better-for-you range",
+    "publisher": "FoodBev Media",
+    "source_domain": "foodbev.com",
+    "credibility_tier": "tier2",
+    "is_press_release": false,
+    "corroboration_count": 0,
+    "cluster_size": 1,
+    "published": "2026-06-15T09:30:00+00:00",
+    "url": "https://www.foodbev.com/news/snack-startup-40m-investment/",
+    "matched_deal_terms": [
+      "investment"
+    ],
+    "matched_fmcg_terms": [
+      "grocery",
+      "snack"
+    ],
+    "duplicate_urls": []
+  },
+  {
+    "rank_score": 0.6377,
+    "relevance": 78,
+    "credibility": 85,
+    "is_relevant": true,
+    "deal_type": "Buyout / PE",
+    "deal_value": null,
+    "acquirer": null,
+    "target": null,
+    "title": "Reckitt agrees to sell homecare brands to private equity buyer",
+    "publisher": "The Grocer",
+    "source_domain": "thegrocer.co.uk",
+    "credibility_tier": "tier2",
+    "is_press_release": false,
+    "corroboration_count": 0,
+    "cluster_size": 1,
+    "published": "2026-06-10T16:05:00+00:00",
+    "url": "https://www.thegrocer.co.uk/finance/reckitt-homecare-brands-sale/2026",
+    "matched_deal_terms": [
+      "private equity"
+    ],
+    "matched_fmcg_terms": [
+      "consumer health",
+      "hygiene",
+      "reckitt"
+    ],
+    "duplicate_urls": []
+  },
+  {
+    "rank_score": 0.5905,
+    "relevance": 94,
+    "credibility": 50,
+    "is_relevant": true,
+    "deal_type": "Acquisition",
+    "deal_value": null,
+    "acquirer": null,
+    "target": null,
+    "title": "Grupo Bimbo to acquire bakery business, expanding in packaged bread",
+    "publisher": "BakeryandSnacks",
+    "source_domain": "bakeryandsnacks.com",
+    "credibility_tier": "unknown",
+    "is_press_release": false,
+    "corroboration_count": 0,
+    "cluster_size": 1,
+    "published": "2026-06-09T08:20:00+00:00",
+    "url": "https://www.bakeryandsnacks.com/Article/2026/06/09/grupo-bimbo-bakery-acquisition",
+    "matched_deal_terms": [
+      "acquire"
+    ],
+    "matched_fmcg_terms": [
+      "bimbo",
+      "grupo bimbo"
+    ],
+    "duplicate_urls": []
+  },
+  {
+    "rank_score": 0.5847,
+    "relevance": 71,
+    "credibility": 85,
+    "is_relevant": true,
+    "deal_type": "Investment",
+    "deal_value": null,
+    "acquirer": null,
+    "target": null,
+    "title": "Household cleaning brand sold to investment consortium",
+    "publisher": "Consumer Goods Technology",
+    "source_domain": "consumergoods.com",
+    "credibility_tier": "tier2",
+    "is_press_release": false,
+    "corroboration_count": 0,
+    "cluster_size": 1,
+    "published": "2026-06-08T15:55:00+00:00",
+    "url": "https://www.consumergoods.com/household-cleaning-brand-sold-2026",
+    "matched_deal_terms": [
+      "invest in",
+      "investment"
+    ],
+    "matched_fmcg_terms": [
+      "household"
+    ],
+    "duplicate_urls": []
+  },
+  {
+    "rank_score": 0.4871,
+    "relevance": 56,
+    "credibility": 47,
+    "is_relevant": true,
+    "deal_type": "Funding round",
+    "deal_value": "$25 million",
+    "acquirer": null,
+    "target": null,
+    "title": "Oral care challenger brand raises $25m to fund retail expansion",
+    "publisher": "GlobeNewswire",
+    "source_domain": "globenewswire.com",
+    "credibility_tier": "press_release",
+    "is_press_release": true,
+    "corroboration_count": 0,
+    "cluster_size": 1,
+    "published": "2026-06-16T12:00:00+00:00",
+    "url": "https://www.globenewswire.com/news-release/2026/06/16/oral-care-funding-round",
+    "matched_deal_terms": [
+      "funding round"
+    ],
+    "matched_fmcg_terms": [
+      "grocery",
+      "household",
+      "oral care"
+    ],
+    "duplicate_urls": []
+  },
+  {
+    "rank_score": 0.4778,
+    "relevance": 20,
+    "credibility": 95,
+    "is_relevant": false,
+    "deal_type": "Deal / other",
+    "deal_value": null,
+    "acquirer": null,
+    "target": null,
+    "title": "Consumer goods giant posts higher quarterly sales on price increases",
+    "publisher": "CNBC",
+    "source_domain": "cnbc.com",
+    "credibility_tier": "tier1",
+    "is_press_release": false,
+    "corroboration_count": 0,
+    "cluster_size": 1,
+    "published": "2026-06-17T07:30:00+00:00",
+    "url": "https://www.cnbc.com/2026/06/17/consumer-goods-q2-results.html",
+    "matched_deal_terms": [],
+    "matched_fmcg_terms": [
+      "consumer goods",
+      "household",
+      "personal care"
+    ],
+    "duplicate_urls": []
+  },
+  {
+    "rank_score": 0.4593,
+    "relevance": 20,
+    "credibility": 85,
+    "is_relevant": false,
+    "deal_type": "Deal / other",
+    "deal_value": null,
+    "acquirer": null,
+    "target": null,
+    "title": "New limited-edition snack flavour launches nationwide this summer",
+    "publisher": "Food Dive",
+    "source_domain": "fooddive.com",
+    "credibility_tier": "tier2",
+    "is_press_release": false,
+    "corroboration_count": 0,
+    "cluster_size": 1,
+    "published": "2026-06-18T09:15:00+00:00",
+    "url": "https://www.fooddive.com/news/new-snack-flavour-launch-summer/",
+    "matched_deal_terms": [],
+    "matched_fmcg_terms": [
+      "grocery",
+      "snack"
+    ],
+    "duplicate_urls": []
+  },
+  {
+    "rank_score": 0.3687,
+    "relevance": 0,
+    "credibility": 95,
+    "is_relevant": false,
+    "deal_type": "Deal / other",
+    "deal_value": null,
+    "acquirer": null,
+    "target": null,
+    "title": "City football club unveils new home kit for upcoming season",
+    "publisher": "BBC Sport",
+    "source_domain": "bbc.com",
+    "credibility_tier": "tier1",
+    "is_press_release": false,
+    "corroboration_count": 0,
+    "cluster_size": 1,
+    "published": "2026-06-15T12:40:00+00:00",
+    "url": "https://www.bbc.com/sport/football/club-new-kit-2026",
+    "matched_deal_terms": [],
+    "matched_fmcg_terms": [],
+    "duplicate_urls": []
+  },
+  {
+    "rank_score": 0.3364,
+    "relevance": 20,
+    "credibility": 50,
+    "is_relevant": false,
+    "deal_type": "Acquisition",
+    "deal_value": "$1.2 billion",
+    "acquirer": null,
+    "target": null,
+    "title": "Enterprise software firm acquires cloud security start-up for $1.2 billion",
+    "publisher": "TechCrunch",
+    "source_domain": "techcrunch.com",
+    "credibility_tier": "unknown",
+    "is_press_release": false,
+    "corroboration_count": 0,
+    "cluster_size": 1,
+    "published": "2026-06-16T17:00:00+00:00",
+    "url": "https://techcrunch.com/2026/06/16/software-security-acquisition/",
+    "matched_deal_terms": [
+      "acquire",
+      "acquires"
+    ],
+    "matched_fmcg_terms": [],
+    "duplicate_urls": []
+  }
+]

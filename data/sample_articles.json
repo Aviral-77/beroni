@@ -1,0 +1,213 @@
+[
+  {
+    "_note": "ILLUSTRATIVE SAMPLE DATA. Synthetic snapshot seeded from publicly reported FMCG deals, with publication dates normalised to a recent window purely for demonstration. The deployed app uses real-time public RSS feeds; this file only exists so the demo and pipeline tests work when outbound news access is blocked.",
+    "title": "Mars to acquire Kellanova in $36 billion deal",
+    "summary": "Confectionery group Mars has agreed to acquire snacks and cereal maker Kellanova, owner of Pringles and Cheez-It, in a deal valued at about $36 billion, creating one of the world's largest packaged-food companies.",
+    "url": "https://www.reuters.com/markets/deals/mars-acquire-kellanova-2026-06-19",
+    "publisher": "Reuters",
+    "published": "2026-06-19T08:05:00Z"
+  },
+  {
+    "title": "Mars strikes $36bn deal to buy Pringles maker Kellanova",
+    "summary": "Mars has agreed to buy Kellanova, the owner of Pringles and Cheez-It, for around $36 billion, in one of the largest packaged-food acquisitions in years as consumer giants consolidate.",
+    "url": "https://www.bloomberg.com/news/articles/2026-06-19/mars-kellanova-deal",
+    "publisher": "Bloomberg",
+    "published": "2026-06-19T09:20:00Z"
+  },
+  {
+    "title": "Kellanova agrees to $36 billion takeover by Mars",
+    "summary": "Snacks and cereal maker Kellanova, owner of Pringles and Cheez-It, has agreed to a takeover by Mars valued at about $36 billion, the companies said, in a major consolidation of the packaged-food industry.",
+    "url": "https://www.fooddive.com/news/mars-kellanova-36-billion-takeover/2026",
+    "publisher": "Food Dive",
+    "published": "2026-06-19T11:00:00Z"
+  },
+  {
+    "title": "PepsiCo to acquire prebiotic soda brand poppi for $1.95 billion",
+    "summary": "PepsiCo has agreed to acquire fast-growing prebiotic soda brand poppi for about $1.95 billion, expanding its push into functional and better-for-you beverages as consumers cut back on traditional soft drinks.",
+    "url": "https://www.cnbc.com/2026/06/17/pepsico-poppi-acquisition.html",
+    "publisher": "CNBC",
+    "published": "2026-06-17T13:30:00Z"
+  },
+  {
+    "title": "PepsiCo buys functional soda maker poppi in nearly $2bn deal",
+    "summary": "PepsiCo has agreed to buy prebiotic soda brand poppi for roughly $1.95 billion, deepening its bet on functional beverages and better-for-you drinks as soda consumption shifts.",
+    "url": "https://www.beveragedaily.com/article/2026/06/17/pepsico-poppi-deal",
+    "publisher": "Beverage Daily",
+    "published": "2026-06-17T16:10:00Z"
+  },
+  {
+    "title": "Unilever sets out plans to spin off ice cream business in stock-market listing",
+    "summary": "Unilever has confirmed plans to separate its ice cream division, home to Magnum and Ben & Jerry's, into a standalone listed company, as the consumer goods group sharpens its focus on higher-growth personal care and nutrition brands.",
+    "url": "https://www.ft.com/content/unilever-ice-cream-spinoff-2026",
+    "publisher": "Financial Times",
+    "published": "2026-06-16T07:45:00Z"
+  },
+  {
+    "title": "Unilever to demerge Magnum ice cream arm via IPO",
+    "summary": "Unilever will spin off its ice cream business, which includes Magnum and Ben & Jerry's, through a stock-market listing, separating the lower-margin unit as it concentrates on beauty, wellbeing and home care.",
+    "url": "https://www.just-food.com/news/unilever-ice-cream-demerger-ipo/",
+    "publisher": "Just Food",
+    "published": "2026-06-16T10:25:00Z"
+  },
+  {
+    "title": "Keurig Dr Pepper acquires energy drink maker in $1 billion deal",
+    "summary": "Keurig Dr Pepper has agreed to acquire a fast-growing energy drink brand for about $1 billion, expanding its presence in the booming energy category alongside its coffee and soft-drink portfolio.",
+    "url": "https://www.fooddive.com/news/keurig-dr-pepper-energy-drink-acquisition/",
+    "publisher": "Food Dive",
+    "published": "2026-06-15T14:00:00Z"
+  },
+  {
+    "title": "Mondelez explores potential acquisition of Hershey, sources say",
+    "summary": "Oreo maker Mondelez International is said to have made a fresh approach to chocolate maker Hershey about a potential combination, according to people familiar with the matter, which would create a confectionery giant. Hershey's controlling trust has previously rebuffed offers.",
+    "url": "https://www.bloomberg.com/news/articles/2026-06-13/mondelez-hershey-approach",
+    "publisher": "Bloomberg",
+    "published": "2026-06-13T18:40:00Z"
+  },
+  {
+    "title": "Mondelez said to revive takeover interest in Hershey",
+    "summary": "Mondelez International has reportedly revived its interest in acquiring chocolate maker Hershey, sources said, in talks that could form a confectionery powerhouse, though Hershey's controlling trust has rejected past approaches.",
+    "url": "https://finance.yahoo.com/news/mondelez-hershey-takeover-interest.html",
+    "publisher": "Yahoo Finance",
+    "published": "2026-06-13T20:15:00Z"
+  },
+  {
+    "title": "L'Oreal acquires premium skincare brand to expand dermatological beauty",
+    "summary": "L'Oreal has agreed to acquire a premium skincare brand, adding to its active cosmetics division as the beauty group invests in science-backed dermatological products and premiumisation.",
+    "url": "https://www.cosmeticsdesign.com/Article/2026/06/12/loreal-skincare-acquisition",
+    "publisher": "CosmeticsDesign",
+    "published": "2026-06-12T09:05:00Z"
+  },
+  {
+    "title": "Campbell completes $2.7 billion acquisition of premium sauce maker",
+    "summary": "Campbell has completed its $2.7 billion acquisition of a premium pasta-sauce business, strengthening its branded grocery portfolio with a fast-growing, higher-margin Italian sauce brand.",
+    "url": "https://www.just-food.com/news/campbell-sauce-acquisition-completed/",
+    "publisher": "Just Food",
+    "published": "2026-06-11T12:30:00Z"
+  },
+  {
+    "title": "Lactalis to buy regional cheese business, expanding dairy footprint",
+    "summary": "French dairy group Lactalis has agreed to acquire a regional cheese manufacturer, expanding its production capacity and brand portfolio in a consolidating dairy market.",
+    "url": "https://www.dairyreporter.com/Article/2026/06/10/lactalis-cheese-acquisition",
+    "publisher": "DairyReporter",
+    "published": "2026-06-10T08:50:00Z"
+  },
+  {
+    "title": "Functional beverage start-up raises $75 million Series C led by consumer fund",
+    "summary": "A functional beverage start-up has raised $75 million in a Series C funding round led by a consumer-focused growth fund, which it will use to scale distribution and marketing for its better-for-you drinks.",
+    "url": "https://www.foodbev.com/news/functional-beverage-startup-series-c/",
+    "publisher": "FoodBev Media",
+    "published": "2026-06-18T10:00:00Z"
+  },
+  {
+    "title": "Private equity firm takes majority stake in personal care brand",
+    "summary": "A private equity firm has acquired a majority stake in a fast-growing personal care and hygiene brand, backing its expansion into new categories and international markets.",
+    "url": "https://www.cityam.com/private-equity-personal-care-stake-2026/",
+    "publisher": "City A.M.",
+    "published": "2026-06-14T15:20:00Z"
+  },
+  {
+    "title": "Nestle divests underperforming frozen food unit to focus on coffee and pet care",
+    "summary": "Nestle has agreed to divest an underperforming frozen food business as the world's largest food company sharpens its portfolio around higher-growth coffee, pet care and nutrition brands.",
+    "url": "https://www.reuters.com/markets/deals/nestle-frozen-food-divestiture-2026",
+    "publisher": "Reuters",
+    "published": "2026-06-09T11:40:00Z"
+  },
+  {
+    "title": "Coca-Cola invests in dairy-alternative brand to broaden drinks portfolio",
+    "summary": "Coca-Cola has taken a minority investment in a plant-based dairy-alternative brand, broadening its non-carbonated portfolio as demand for plant-based drinks grows.",
+    "url": "https://www.beveragedaily.com/article/2026/06/12/coca-cola-plant-based-investment",
+    "publisher": "Beverage Daily",
+    "published": "2026-06-12T13:15:00Z"
+  },
+  {
+    "title": "Reckitt agrees to sell homecare brands to private equity buyer",
+    "summary": "Consumer health and hygiene group Reckitt has agreed to sell a portfolio of homecare brands to a private equity buyer, part of a strategy to streamline its portfolio around higher-margin health and hygiene products.",
+    "url": "https://www.thegrocer.co.uk/finance/reckitt-homecare-brands-sale/2026",
+    "publisher": "The Grocer",
+    "published": "2026-06-10T16:05:00Z"
+  },
+  {
+    "title": "Snack start-up secures $40m investment to expand better-for-you range",
+    "summary": "A healthy-snack start-up has secured $40 million in growth investment from a consumer venture fund to expand its better-for-you range and accelerate retail distribution across grocery chains.",
+    "url": "https://www.foodbev.com/news/snack-startup-40m-investment/",
+    "publisher": "FoodBev Media",
+    "published": "2026-06-15T09:30:00Z"
+  },
+  {
+    "title": "Beauty conglomerate acquires haircare brand to strengthen professional division",
+    "summary": "A global beauty conglomerate has acquired a fast-growing professional haircare brand, strengthening its salon and professional division amid rising demand for premium hair products.",
+    "url": "https://www.cosmeticsbusiness.com/news/beauty-haircare-acquisition-2026",
+    "publisher": "Cosmetics Business",
+    "published": "2026-06-13T11:10:00Z"
+  },
+  {
+    "title": "Brewer agrees to acquire craft beer maker in regional consolidation",
+    "summary": "A major brewer has agreed to acquire a regional craft beer maker, continuing a wave of consolidation in the beer market as larger players buy fast-growing craft and premium brands.",
+    "url": "https://www.just-drinks.com/news/brewer-craft-beer-acquisition/",
+    "publisher": "Just Drinks",
+    "published": "2026-06-11T14:45:00Z"
+  },
+  {
+    "title": "Grupo Bimbo to acquire bakery business, expanding in packaged bread",
+    "summary": "Mexican baking giant Grupo Bimbo has agreed to acquire a regional bakery business, expanding its packaged-bread footprint and distribution network in a key growth market.",
+    "url": "https://www.bakeryandsnacks.com/Article/2026/06/09/grupo-bimbo-bakery-acquisition",
+    "publisher": "BakeryandSnacks",
+    "published": "2026-06-09T08:20:00Z"
+  },
+  {
+    "title": "Pet food maker acquired by consumer goods group in $850 million deal",
+    "summary": "A premium pet food maker has been acquired by a consumer goods group for about $850 million, as companies chase growth in the resilient and fast-growing pet care category.",
+    "url": "https://www.petfoodindustry.com/news/pet-food-acquisition-850-million-2026",
+    "publisher": "Pet Food Industry",
+    "published": "2026-06-14T10:50:00Z"
+  },
+  {
+    "title": "Oral care challenger brand raises $25m to fund retail expansion",
+    "summary": "An oral care challenger brand has raised $25 million in a funding round to fund expansion into major grocery and drugstore retailers, taking on established household names.",
+    "url": "https://www.globenewswire.com/news-release/2026/06/16/oral-care-funding-round",
+    "publisher": "GlobeNewswire",
+    "published": "2026-06-16T12:00:00Z"
+  },
+  {
+    "title": "Spirits group acquires premium tequila brand to capture agave boom",
+    "summary": "A global spirits group has agreed to acquire a premium tequila brand, betting on continued growth in the agave spirits category as consumers trade up to premium tequila and mezcal.",
+    "url": "https://www.just-drinks.com/news/spirits-tequila-acquisition/",
+    "publisher": "Just Drinks",
+    "published": "2026-06-10T13:35:00Z"
+  },
+  {
+    "title": "Household cleaning brand sold to investment consortium",
+    "summary": "A well-known household cleaning brand has been sold to an investment consortium, which plans to invest in product innovation and sustainability as it competes with multinational home-care giants.",
+    "url": "https://www.consumergoods.com/household-cleaning-brand-sold-2026",
+    "publisher": "Consumer Goods Technology",
+    "published": "2026-06-08T15:55:00Z"
+  },
+  {
+    "title": "New limited-edition snack flavour launches nationwide this summer",
+    "summary": "A leading snack brand has launched a new limited-edition flavour available in grocery stores nationwide this summer, supported by a major marketing campaign. The launch is part of the brand's seasonal innovation pipeline.",
+    "url": "https://www.fooddive.com/news/new-snack-flavour-launch-summer/",
+    "publisher": "Food Dive",
+    "published": "2026-06-18T09:15:00Z"
+  },
+  {
+    "title": "Consumer goods giant posts higher quarterly sales on price increases",
+    "summary": "A consumer goods giant reported higher quarterly sales and profit, helped by price increases and resilient demand for its household and personal care products, and lifted its full-year outlook for organic growth.",
+    "url": "https://www.cnbc.com/2026/06/17/consumer-goods-q2-results.html",
+    "publisher": "CNBC",
+    "published": "2026-06-17T07:30:00Z"
+  },
+  {
+    "title": "Enterprise software firm acquires cloud security start-up for $1.2 billion",
+    "summary": "An enterprise software firm has agreed to acquire a cloud security start-up for $1.2 billion, expanding its cybersecurity platform and adding tools for threat detection and data protection for corporate IT customers.",
+    "url": "https://techcrunch.com/2026/06/16/software-security-acquisition/",
+    "publisher": "TechCrunch",
+    "published": "2026-06-16T17:00:00Z"
+  },
+  {
+    "title": "City football club unveils new home kit for upcoming season",
+    "summary": "A city football club has unveiled its new home kit for the upcoming season, featuring a redesigned crest and updated colours. The shirt goes on sale to supporters this week ahead of the club's pre-season tour.",
+    "url": "https://www.bbc.com/sport/football/club-new-kit-2026",
+    "publisher": "BBC Sport",
+    "published": "2026-06-15T12:40:00Z"
+  }
+]

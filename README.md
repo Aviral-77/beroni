@@ -1,0 +1,222 @@
+# 📰 FMCG Deal Intelligence
+
+A small, transparent **agent pipeline** that turns public news into a concise
+**FMCG (fast-moving consumer goods) M&A & investment newsletter** a business
+user can skim in two minutes.
+
+It aggregates deal-related news, removes duplicates and near-duplicates, filters
+for genuine FMCG-deal relevance, checks basic source credibility, and emits a
+short, structured newsletter — plus the raw data and the newsletter in
+Excel / Word / PowerPoint.
+
+> **Pipeline / "agent" thinking:** `ingestion → cleaning → scoring → newsletter`
+> — four linear, inspectable stages, each easy to reason about and tune.
+
+---
+
+## 🔗 Links (final deliverable)
+
+| Deliverable | Link |
+|---|---|
+| **Demo app** (Streamlit) | _<add your Streamlit Community Cloud URL here after deploying — see [Deploy](#-deploy-the-demo-app)>_ |
+| **Source code** (GitHub) | _<this repository>_ |
+| **Raw data** (CSV / JSON) | [`data/outputs/`](data/outputs/) |
+| **Newsletter** (Excel / Word / PPT / Markdown) | [`data/outputs/`](data/outputs/) |
+
+> The repository ships a ready-to-run sample so reviewers can see every output
+> immediately, and the app is one-click deployable. The live demo URL requires
+> connecting the repo to a host (Streamlit Cloud) under your own account —
+> instructions below.
+
+---
+
+## 🏗️ Architecture
+
+![Architecture](assets/architecture.svg)
+
+```mermaid
+flowchart LR
+    subgraph SRC[Public sources]
+        G[Google News RSS<br/>deal queries]
+        T[FMCG trade press<br/>Food Dive, Just-Food…]
+    end
+    SRC --> I
+
+    I[1 · Ingest<br/>parse RSS/Atom<br/>resolve publisher<br/>date-filter]
+    C[2 · Clean<br/>exact dedup +<br/>near-dup merge<br/>entity overlap]
+    S[3 · Score<br/>relevance gate<br/>credibility tiers<br/>+ corroboration]
+    N[4 · Newsletter<br/>rank → lead/brief<br/>summarise<br/>methodology]
+
+    I --> C --> S --> N
+    LLM([Optional: Claude<br/>writes summaries]) -.-> N
+    SAMPLE([Sample fallback<br/>if feeds blocked]) -.-> I
+
+    N --> O[Streamlit app +<br/>CSV · JSON · XLSX · DOCX · PPTX]
+```
+
+---
+
+## 🧠 Pipeline explained (with the logic that matters)
+
+### 1 · Ingestion — `src/ingest.py`
+Pulls from **public RSS/Atom feeds only** (no paywalls, no scraping): Google
+News search feeds for FMCG deal queries — which conveniently attribute each item
+to its **original publisher** for credibility scoring — plus direct FMCG trade
+press. Parsing uses the standard library (`requests` + `xml.etree`), so there are
+no heavyweight/compiled dependencies. Each item is normalised to
+`{title, summary, url, publisher, source_domain, published}` and filtered to a
+look-back window.
+
+### 2 · Cleaning & de-duplication — `src/clean.py`
+The same deal is reported by many outlets; we want each **deal** once, while
+remembering how many independent outlets covered it.
+
+- **Exact dedup** on a normalised URL (tracking params stripped) and a
+  normalised title.
+- **Near-duplicate merge** — the interesting part. Each story is *fingerprinted*
+  by its **named entities** (capitalised company/brand tokens) and **figures**
+  (deal values), plus significant content words. Two reports are merged when
+  they **share ≥ 2 entities** *and* their blended **overlap score** ≥ `0.50`,
+  where the score is:
+
+  ```
+  similarity = 0.5 · entity_overlap + 0.5 · content_overlap
+  overlap(A, B) = |A ∩ B| / min(|A|, |B|)        # overlap coefficient
+  ```
+
+  Headlines are reworded freely across outlets, but the **company names, brands
+  and figures stay constant** — so entity overlap is the dominant, discriminating
+  signal, and the "≥ 2 shared entities" gate stops two unrelated stories that
+  merely share one common word from being merged. Clustering uses **union-find**,
+  and each cluster keeps its **most credible, then most recent** report as the
+  representative; the others become *corroboration*.
+
+### 3 · Scoring — `src/score.py`
+Three transparent, rule-based scorers (no black boxes — every score is
+explained by the `matched_*` fields attached to each article):
+
+- **Relevance (0–100), dual-gated.** An item must show **both** a *deal signal*
+  (`acquire`, `merger`, `stake`, `divest`, `funding round`, `IPO`…) **and** an
+  *FMCG signal* (a category like *beverage/personal care/snack* or a named
+  consumer-goods company like *Nestlé/PepsiCo/Unilever*). **Title matches count
+  double.** If either signal is missing the item is marked not-relevant and
+  capped — so generic business news and non-deal FMCG news fall below the
+  threshold and are dropped.
+- **Credibility (0–100), source-based.** A transparent tier allow-list —
+  global wire / financial press (Tier 1) > established trade press (Tier 2) >
+  general/market news (Tier 3) > press-release wires (flagged) > unknown — plus
+  a **corroboration bonus** when several independent outlets report the same
+  deal, minus a penalty for a **lone press release**. We rate the *source's
+  standing*, not the truth of any individual claim.
+- **Deal-fact extraction.** Best-effort regex for deal **value** (`$36 billion`),
+  **type** (acquisition / merger / divestiture / investment / funding / IPO) and
+  **parties** (acquirer → target).
+
+### 4 · Newsletter — `src/newsletter.py`
+Ranks by a composite of **relevance (45%), credibility (30%), recency (15%),
+corroboration (10%)**, splits into **lead deals** and an *"also in the news"*
+tail, writes a per-deal summary, and appends an at-a-glance intro and a
+**methodology footer**. Summaries are written by **Claude** (`claude-opus-4-8`)
+when an `ANTHROPIC_API_KEY` is present, with a **transparent template fallback**
+so the demo is fully functional with zero credentials.
+
+---
+
+## ✅ Credibility & transparent assumptions
+
+- **We score the source, not the claim.** Credibility reflects an outlet's
+  editorial standing (a tiered allow-list in `src/config.py`), plus how many
+  *independent* outlets corroborate a deal. We do not fact-check individual
+  statements.
+- **Press-release wires are flagged** (PR Newswire, Business Wire, GlobeNewswire,
+  …) and a lone, un-corroborated release is penalised — factual for
+  announcements, but primary PR rather than independent journalism.
+- **Deal value / parties are heuristic** (regex) and may be partial; the source
+  link is always provided so a reader can verify.
+- **Coverage = what public feeds surface.** Private deals and paywalled scoops
+  are out of scope by design.
+- **Everything is tunable and visible** — sources, keyword vocabularies,
+  credibility tiers and thresholds all live in `src/config.py`, and the app
+  shows the per-stage funnel and per-feed fetch log.
+- **Decision-support, not investment advice.**
+
+---
+
+## 🚀 Run it locally
+
+```bash
+git clone <this-repo>
+cd beroni
+pip install -r requirements.txt
+
+# Option A — the demo app
+streamlit run app.py
+
+# Option B — generate every deliverable from the CLI
+python scripts/run_pipeline.py                 # live feeds, falls back to sample
+python scripts/run_pipeline.py --sample        # force the bundled dataset
+python scripts/run_pipeline.py --no-llm --days 7 --min-relevance 40
+```
+
+Outputs are written to `data/outputs/` (CSV, JSON, XLSX, DOCX, PPTX, MD).
+
+**Optional — Claude-written summaries:** set `ANTHROPIC_API_KEY` (and optionally
+`FMCG_LLM_MODEL`, default `claude-opus-4-8`). Without a key the app uses template
+summaries and works exactly the same otherwise.
+
+```bash
+export ANTHROPIC_API_KEY=sk-ant-...
+```
+
+---
+
+## ☁️ Deploy the demo app
+
+**Streamlit Community Cloud (free, ~2 minutes):**
+
+1. Push this repo to GitHub.
+2. Go to [share.streamlit.io](https://share.streamlit.io) → **New app** → pick
+   this repo, branch, and `app.py`.
+3. *(Optional)* add `ANTHROPIC_API_KEY` under **Advanced settings → Secrets** to
+   enable Claude summaries.
+4. Deploy, then paste the resulting URL into the [Links](#-links-final-deliverable)
+   table above.
+
+The app needs open outbound internet to pull live feeds; on a restricted host it
+automatically falls back to the bundled sample so it always renders.
+
+---
+
+## 🗂️ Project structure
+
+```
+beroni/
+├── app.py                  # Streamlit demo app
+├── scripts/run_pipeline.py # CLI: run pipeline → write all deliverables
+├── src/
+│   ├── config.py           # sources, keyword vocab, credibility tiers, thresholds
+│   ├── ingest.py           # Stage 1 — RSS/Atom ingestion (stdlib parser)
+│   ├── clean.py            # Stage 2 — exact + near-duplicate de-duplication
+│   ├── score.py            # Stage 3 — relevance + credibility + fact extraction
+│   ├── newsletter.py       # Stage 4 — ranking, summaries (Claude/template), draft
+│   ├── exporters.py        # CSV / JSON / Excel / Word / PowerPoint
+│   └── pipeline.py         # the "agent" — orchestrates the four stages
+├── data/
+│   ├── sample_articles.json   # illustrative offline dataset (clearly labelled)
+│   └── outputs/               # committed sample deliverables
+├── assets/architecture.svg
+├── docs/architecture.md
+└── requirements.txt
+```
+
+---
+
+## 🧪 Note on the sample dataset
+
+`data/sample_articles.json` is an **illustrative snapshot** seeded from publicly
+reported FMCG deals, with publication dates normalised to a recent window purely
+for demonstration. It exists so the app, the pipeline tests and the committed
+deliverables work even when a host blocks outbound news access. **In live mode
+the app ingests real-time public feeds.** The dataset deliberately includes
+duplicate reports of the same deal and a few off-topic items, so the
+de-duplication and relevance logic are visible end-to-end.

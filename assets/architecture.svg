@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="660" viewBox="0 0 1160 660" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#1F4E79"/>
+    </marker>
+    <style>
+      .stage  { fill:#1F4E79; }
+      .stagel { fill:#ffffff; font-size:17px; font-weight:700; }
+      .stages { fill:#cfe0f2; font-size:11px; }
+      .box    { fill:#F4F6F9; stroke:#c9d4e2; stroke-width:1.5; }
+      .boxt   { fill:#1A1A1A; font-size:12px; }
+      .boxh   { fill:#1F4E79; font-size:13px; font-weight:700; }
+      .small  { fill:#5b6b7d; font-size:11px; }
+      .flow   { stroke:#1F4E79; stroke-width:2.2; fill:none; }
+      .opt    { fill:#fbf3e6; stroke:#e0b96a; stroke-width:1.5; }
+      .opth   { fill:#9a6b12; font-size:12px; font-weight:700; }
+    </style>
+  </defs>
+
+  <text x="40" y="44" font-size="26" font-weight="700" fill="#1F4E79">FMCG Deal Intelligence — Pipeline Architecture</text>
+  <text x="40" y="68" font-size="14" fill="#5b6b7d">ingestion → cleaning → scoring → newsletter · a minimal, inspectable "agent" flow</text>
+
+  <!-- SOURCES -->
+  <rect class="box" x="40" y="110" width="200" height="150" rx="10"/>
+  <text class="boxh" x="60" y="135">Public sources</text>
+  <text class="boxt" x="60" y="160">• Google News RSS</text>
+  <text class="boxt" x="60" y="180">  (deal queries)</text>
+  <text class="boxt" x="60" y="202">• FMCG trade press</text>
+  <text class="boxt" x="60" y="222">  (Food Dive, Just-Food…)</text>
+  <text class="small" x="60" y="246">No paywalled / private data</text>
+
+  <!-- STAGE 1 INGEST -->
+  <rect class="stage" x="300" y="110" width="170" height="150" rx="10"/>
+  <text class="stagel" x="320" y="138">1 · Ingest</text>
+  <text class="stages" x="320" y="162">requests + xml.etree</text>
+  <text class="stages" x="320" y="182">parse RSS/Atom</text>
+  <text class="stages" x="320" y="202">resolve publisher</text>
+  <text class="stages" x="320" y="222">date-filter window</text>
+  <text class="stages" x="320" y="244">→ normalised articles</text>
+
+  <!-- STAGE 2 CLEAN -->
+  <rect class="stage" x="500" y="110" width="170" height="150" rx="10"/>
+  <text class="stagel" x="520" y="138">2 · Clean</text>
+  <text class="stages" x="520" y="162">exact dedup</text>
+  <text class="stages" x="520" y="182">(URL + title norm)</text>
+  <text class="stages" x="520" y="202">near-dup clustering</text>
+  <text class="stages" x="520" y="222">entity-overlap +</text>
+  <text class="stages" x="520" y="242">union-find → merge</text>
+
+  <!-- STAGE 3 SCORE -->
+  <rect class="stage" x="700" y="110" width="170" height="150" rx="10"/>
+  <text class="stagel" x="720" y="138">3 · Score</text>
+  <text class="stages" x="720" y="162">relevance (deal ∧</text>
+  <text class="stages" x="720" y="182">FMCG, gated)</text>
+  <text class="stages" x="720" y="202">credibility (tiers +</text>
+  <text class="stages" x="720" y="222">corroboration)</text>
+  <text class="stages" x="720" y="242">extract deal facts</text>
+
+  <!-- STAGE 4 NEWSLETTER -->
+  <rect class="stage" x="900" y="110" width="170" height="150" rx="10"/>
+  <text class="stagel" x="920" y="138">4 · Newsletter</text>
+  <text class="stages" x="920" y="162">composite rank</text>
+  <text class="stages" x="920" y="182">lead + brief split</text>
+  <text class="stages" x="920" y="202">summarise items</text>
+  <text class="stages" x="920" y="222">structured draft +</text>
+  <text class="stages" x="920" y="242">methodology footer</text>
+
+  <!-- flow arrows between stages -->
+  <line class="flow" x1="240" y1="185" x2="296" y2="185" marker-end="url(#arrow)"/>
+  <line class="flow" x1="470" y1="185" x2="496" y2="185" marker-end="url(#arrow)"/>
+  <line class="flow" x1="670" y1="185" x2="696" y2="185" marker-end="url(#arrow)"/>
+  <line class="flow" x1="870" y1="185" x2="896" y2="185" marker-end="url(#arrow)"/>
+
+  <!-- OPTIONAL LLM -->
+  <rect class="opt" x="900" y="300" width="170" height="86" rx="10"/>
+  <text class="opth" x="920" y="324">Optional: Claude</text>
+  <text class="small" x="920" y="344">claude-opus-4-8 writes</text>
+  <text class="small" x="920" y="362">analyst summaries;</text>
+  <text class="small" x="920" y="380">template fallback if no key</text>
+  <line class="flow" x1="985" y1="300" x2="985" y2="262" marker-end="url(#arrow)" stroke-dasharray="5 4"/>
+
+  <!-- FALLBACK sample -->
+  <rect class="opt" x="300" y="300" width="170" height="70" rx="10"/>
+  <text class="opth" x="320" y="324">Sample fallback</text>
+  <text class="small" x="320" y="344">bundled dataset when</text>
+  <text class="small" x="320" y="362">live feeds are blocked</text>
+  <line class="flow" x1="385" y1="300" x2="385" y2="262" marker-end="url(#arrow)" stroke-dasharray="5 4"/>
+
+  <!-- OUTPUTS -->
+  <rect class="box" x="40" y="440" width="1030" height="150" rx="10"/>
+  <text class="boxh" x="60" y="466">Deliverables (Streamlit app + export layer)</text>
+
+  <rect class="box" x="64" y="486" width="150" height="86" rx="8"/>
+  <text class="boxh" x="80" y="510">Newsletter</text>
+  <text class="boxt" x="80" y="532">skimmable draft</text>
+  <text class="small" x="80" y="552">lead deals + brief</text>
+
+  <rect class="box" x="234" y="486" width="150" height="86" rx="8"/>
+  <text class="boxh" x="250" y="510">Raw data</text>
+  <text class="boxt" x="250" y="532">CSV · JSON</text>
+  <text class="small" x="250" y="552">scored articles</text>
+
+  <rect class="box" x="404" y="486" width="150" height="86" rx="8"/>
+  <text class="boxh" x="420" y="510">Excel</text>
+  <text class="boxt" x="420" y="532">3 sheets</text>
+  <text class="small" x="420" y="552">news · raw · method</text>
+
+  <rect class="box" x="574" y="486" width="150" height="86" rx="8"/>
+  <text class="boxh" x="590" y="510">Word</text>
+  <text class="boxt" x="590" y="532">formatted .docx</text>
+  <text class="small" x="590" y="552">business memo</text>
+
+  <rect class="box" x="744" y="486" width="150" height="86" rx="8"/>
+  <text class="boxh" x="760" y="510">PowerPoint</text>
+  <text class="boxt" x="760" y="532">slide per deal</text>
+  <text class="small" x="760" y="552">exec deck</text>
+
+  <rect class="box" x="914" y="486" width="140" height="86" rx="8"/>
+  <text class="boxh" x="930" y="510">Funnel + log</text>
+  <text class="boxt" x="930" y="532">per-stage counts</text>
+  <text class="small" x="930" y="552">transparency</text>
+
+  <line class="flow" x1="985" y1="260" x2="985" y2="410" marker-end="url(#arrow)"/>
+  <text class="small" x="995" y="425">build artefacts</text>
+</svg>

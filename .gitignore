@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.Python
+
+# Environment / secrets
+.env
+.env.*
+*.local
+.streamlit/secrets.toml
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Streamlit cache
+.streamlit/cache/
+
+# NOTE: data/outputs/ contains committed sample deliverables (CSV/JSON/XLSX/
+# DOCX/PPTX) on purpose — they are part of the GitHub deliverable. Regenerate
+# them any time with:  python scripts/run_pipeline.py --sample

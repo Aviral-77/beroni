@@ -1,0 +1,14 @@
+# FMCG Deal Intelligence — runtime dependencies
+# Core pipeline (ingest → clean → score → newsletter) uses only the standard
+# library, so the dependency surface is small and deploys reliably.
+
+streamlit>=1.30,<2        # demo app
+requests>=2.28            # RSS/Atom fetching (stdlib xml.etree does the parsing)
+pandas>=2.0              # in-app tables + Excel writing backend
+openpyxl>=3.1            # .xlsx export
+python-docx>=1.1         # .docx export
+python-pptx>=0.6.21      # .pptx export
+
+# Optional — only needed if you want Claude to write the analyst summaries.
+# The app works fully without it (transparent template summaries are the fallback).
+anthropic>=0.40
