@@ -2,8 +2,8 @@
 # Run the whole pipeline from the command line and write all the output files.
 #
 # Usage:
-#   python scripts/run_pipeline.py [--sample] [--no-llm] [--days N]
-#                                  [--min-relevance N] [--out DIR]
+# python scripts/run_pipeline.py [--sample] [--no-llm] [--days N]
+# [--min-relevance N] [--out DIR]
 #
 # By default it tries live RSS feeds and falls back to the bundled sample
 # dataset if the network is blocked.

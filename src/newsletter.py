@@ -198,7 +198,7 @@ def to_markdown(nl):
         meta = [it.get("deal_type")]
         if it.get("deal_value"):
             meta.append(it["deal_value"])
-        parties = " → ".join(x for x in [it.get("acquirer"), it.get("target")] if x)
+        parties = " -> ".join(x for x in [it.get("acquirer"), it.get("target")] if x)
         if parties:
             meta.append(parties)
         lines.append(f"### {i}. {it['title']}")

@@ -3,18 +3,18 @@ import streamlit as st
 
 from src import pipeline, exporters, newsletter, config
 
-st.set_page_config(page_title="FMCG Deal Intelligence", page_icon="📰", layout="wide")
+st.set_page_config(page_title="FMCG Deal Intelligence", layout="wide")
 
-st.title("📰 FMCG Deal Intelligence")
-st.caption("Real-time M&A & investment newsletter for fast-moving consumer goods.")
+st.title("FMCG Deal Intelligence")
+st.caption("Real-time M&A and investment newsletter for fast-moving consumer goods.")
 
 with st.sidebar:
-    st.header("⚙️ Controls")
+    st.header("Controls")
     data_mode = st.radio("Data source", ["Live news feeds", "Bundled sample"])
     lookback = st.slider("Look-back window (days)", 3, 30, config.THRESHOLDS["lookback_days"])
     min_rel = st.slider("Minimum relevance score", 0, 100, config.THRESHOLDS["min_relevance"], step=5)
     use_llm = st.toggle("Use LLM for summaries", value=True)
-    run = st.button("🚀 Run pipeline", type="primary", use_container_width=True)
+    run = st.button("Run pipeline", type="primary", use_container_width=True)
     st.markdown("---")
     st.markdown(
         "**Stages**\n\n"
@@ -37,7 +37,7 @@ def _run(use_live, lookback, min_rel, use_llm):
 
 
 if run or "result" not in st.session_state:
-    with st.spinner("Running pipeline…"):
+    with st.spinner("Running pipeline..."):
         result, md, files = _run(
             use_live=(data_mode == "Live news feeds"),
             lookback=lookback, min_rel=min_rel, use_llm=use_llm,
@@ -51,10 +51,10 @@ nl = result.newsletter
 s = result.stage_stats
 
 if result.source == "sample":
-    st.info("📦 Using the bundled sample dataset (live feeds blocked or sample mode selected).", icon="ℹ️")
+    st.info("Using the bundled sample dataset (live feeds blocked or sample mode selected).")
 else:
     ok = sum(1 for f in result.fetch_log if f["status"] == "ok")
-    st.success(f"🟢 Live mode - pulled from {ok} feed(s).", icon="✅")
+    st.success(f"Live mode - pulled from {ok} feed(s).")
 
 st.subheader("Pipeline funnel")
 c1, c2, c3, c4, c5 = st.columns(5)
@@ -67,7 +67,7 @@ c4.metric("Lead deals", nl["counts"]["lead"])
 c5.metric("Summaries", "LLM" if nl["llm_used"] else "Template")
 
 tab_news, tab_data, tab_logic, tab_dl = st.tabs(
-    ["📰 Newsletter", "🔢 Raw data", "🧠 Pipeline logic", "⬇️ Downloads"]
+    ["Newsletter", "Raw data", "Pipeline logic", "Downloads"]
 )
 
 with tab_news:
@@ -88,11 +88,12 @@ with tab_logic:
     st.markdown(
         "- **Ingestion** - public RSS/Atom only (Google News + trade press). No paywalls.\n"
         f"- **De-duplication** - exact URL/title match, then near-dup clustering. Stories are "
-        f"fingerprinted by named entities and figures; two reports merge when they share ≥2 entities "
-        f"and their blended overlap ≥ **{config.THRESHOLDS['near_dup_similarity']}**.\n"
-        "- **Relevance** - must have both a deal signal and an FMCG signal (title ×2). "
+        f"fingerprinted by named entities and figures; two reports merge when they share at least "
+        f"2 entities and their blended overlap reaches **{config.THRESHOLDS['near_dup_similarity']}**.\n"
+        "- **Relevance** - must have both a deal signal and an FMCG signal (title counts double). "
         "Items below the threshold are dropped.\n"
-        "- **Credibility** - source-tier allow-list + corroboration bonus − lone press-release penalty.\n"
+        "- **Credibility** - source-tier allow-list plus a corroboration bonus, minus a lone "
+        "press-release penalty.\n"
         "- **Ranking** - relevance 45%, credibility 30%, recency 15%, corroboration 10%."
     )
     st.markdown("#### This run")
@@ -110,9 +111,9 @@ with tab_dl:
         "pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
     }
     labels = {
-        "csv": "⬇️ Raw data (CSV)", "json": "⬇️ Raw data (JSON)",
-        "xlsx": "⬇️ Newsletter (Excel)", "docx": "⬇️ Newsletter (Word)",
-        "pptx": "⬇️ Newsletter (PowerPoint)",
+        "csv": "Raw data (CSV)", "json": "Raw data (JSON)",
+        "xlsx": "Newsletter (Excel)", "docx": "Newsletter (Word)",
+        "pptx": "Newsletter (PowerPoint)",
     }
     cols = st.columns(len(files))
     for col, (name, data) in zip(cols, files.items()):
@@ -123,13 +124,13 @@ with tab_dl:
             use_container_width=True,
         )
     st.download_button(
-        "⬇️ Newsletter (Markdown)", data=md.encode("utf-8"),
+        "Newsletter (Markdown)", data=md.encode("utf-8"),
         file_name="fmcg_newsletter.md", mime="text/markdown",
     )
 
 st.markdown("---")
 st.caption(
-    f"Generated {nl['generated_at'][:19]}Z · "
-    f"{'LLM-written' if nl['llm_used'] else 'template'} summaries · "
+    f"Generated {nl['generated_at'][:19]}Z. "
+    f"{'LLM-written' if nl['llm_used'] else 'template'} summaries. "
     "Decision-support only, not investment advice."
 )

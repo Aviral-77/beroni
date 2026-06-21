@@ -19,7 +19,7 @@ def test_exact_dedup_drops_identical_urls():
         {"title": "Mars to buy Kellanova (copy)", "summary": "x", "url": "https://a.com/x"},
     ]
     reps, stats = clean.deduplicate(arts)
-    # same URL once tracking params are stripped → exactly one survivor
+    # same URL once tracking params are stripped -> exactly one survivor
     assert stats["after_exact_dedup"] == 1
 
 
@@ -37,7 +37,7 @@ def test_near_dup_does_not_over_merge():
     """Distinct deals that share one common word must NOT merge."""
     arts, _ = ingest.load_sample()
     reps, stats = clean.deduplicate(arts)
-    # 30 sample items, 5 true duplicates → 25 representatives
+    # 30 sample items, 5 true duplicates -> 25 representatives
     assert stats["after_near_dedup"] == 25
 
 

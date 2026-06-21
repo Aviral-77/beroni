@@ -1,4 +1,4 @@
-# 📰 FMCG Deal Intelligence
+# FMCG Deal Intelligence
 
 A small, transparent **agent pipeline** that turns public news into a concise
 **FMCG (fast-moving consumer goods) M&A & investment newsletter** a business
@@ -9,16 +9,16 @@ for genuine FMCG-deal relevance, checks basic source credibility, and emits a
 short, structured newsletter - plus the raw data and the newsletter in
 Excel / Word / PowerPoint.
 
-> **Pipeline / "agent" thinking:** `ingestion → cleaning → scoring → newsletter`
+> **Pipeline / "agent" thinking:** `ingestion -> cleaning -> scoring -> newsletter`
 > - four linear, inspectable stages, each easy to reason about and tune.
 
 ---
 
-## 🔗 Links (final deliverable)
+## Links (final deliverable)
 
 | Deliverable | Link |
 |---|---|
-| **Demo app** (Streamlit) | _<add your Streamlit Community Cloud URL here after deploying - see [Deploy](#-deploy-the-demo-app)>_ |
+| **Demo app** (Streamlit) | _<add your Streamlit Community Cloud URL here after deploying - see [Deploy](#deploy-the-demo-app)>_ |
 | **Source code** (GitHub) | _<this repository>_ |
 | **Raw data** (CSV / JSON) | [`data/outputs/`](data/outputs/) |
 | **Newsletter** (Excel / Word / PPT / Markdown) | [`data/outputs/`](data/outputs/) |
@@ -30,7 +30,7 @@ Excel / Word / PowerPoint.
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ![Architecture](assets/architecture.svg)
 
@@ -45,7 +45,7 @@ flowchart LR
     I[1 · Ingest<br/>parse RSS/Atom<br/>resolve publisher<br/>date-filter]
     C[2 · Clean<br/>exact dedup +<br/>near-dup merge<br/>entity overlap]
     S[3 · Score<br/>relevance gate<br/>credibility tiers<br/>+ corroboration]
-    N[4 · Newsletter<br/>rank → lead/brief<br/>summarise<br/>methodology]
+    N[4 · Newsletter<br/>rank -> lead/brief<br/>summarise<br/>methodology]
 
     I --> C --> S --> N
     LLM([Optional: LLM<br/>writes summaries]) -.-> N
@@ -56,7 +56,7 @@ flowchart LR
 
 ---
 
-## 🧠 Pipeline explained (with the logic that matters)
+## Pipeline explained (with the logic that matters)
 
 ### 1 · Ingestion - `src/ingest.py`
 Pulls from **public RSS/Atom feeds only** (no paywalls, no scraping): Google
@@ -110,7 +110,7 @@ explained by the `matched_*` fields attached to each article):
   standing*, not the truth of any individual claim.
 - **Deal-fact extraction.** Best-effort regex for deal **value** (`$36 billion`),
   **type** (acquisition / merger / divestiture / investment / funding / IPO) and
-  **parties** (acquirer → target).
+  **parties** (acquirer -> target).
 
 ### 4 · Newsletter - `src/newsletter.py`
 Ranks by a composite of **relevance (45%), credibility (30%), recency (15%),
@@ -122,7 +122,7 @@ functional with zero credentials.
 
 ---
 
-## ✅ Credibility & transparent assumptions
+## Credibility & transparent assumptions
 
 - **We score the source, not the claim.** Credibility reflects an outlet's
   editorial standing (a tiered allow-list in `src/config.py`), plus how many
@@ -142,7 +142,7 @@ functional with zero credentials.
 
 ---
 
-## 🚀 Run it locally
+## Run it locally
 
 ```bash
 git clone <this-repo>
@@ -171,16 +171,49 @@ export FMCG_LLM_MODEL=your-model-name-here
 
 ---
 
-## ☁️ Deploy the demo app
+## Using the demo app
+
+Once `streamlit run app.py` is up, here is what every control does.
+
+### Sidebar (left)
+
+| Control | What it does |
+|---------|--------------|
+| **Data source** | Switch between "Live news feeds" (pulls real RSS in real time) and "Bundled sample" (the fixed offline dataset). If live mode can't reach the feeds, it quietly falls back to the sample. |
+| **Look-back window (days)** | How far back to keep news. A smaller number means fewer, more recent stories. |
+| **Minimum relevance score** | The cut-off for the relevance score. Raise it to keep only the strongest deal stories; lower it to let more through. |
+| **Use LLM for summaries** | On: an LLM writes the per-deal summaries (needs an API key). Off: plain template summaries are used. |
+| **Run pipeline** | Runs all four steps again with the current settings. Results are cached for 15 minutes, so flipping a switch and pressing this is quick. |
+
+### Top of the page
+
+- **Status banner** tells you whether you are on live data or the sample.
+- **Pipeline funnel** is a row of numbers showing how the list shrinks at each
+  step: how many articles came in, how many were left after de-duplication, how
+  many were relevant, how many made the lead section, and whether summaries came
+  from the LLM or the template.
+
+### Tabs
+
+| Tab | What it shows |
+|-----|---------------|
+| **Newsletter** | The finished newsletter: lead deals with summaries and sources, a short "also in the news" list, and the methodology note. This is the main output. |
+| **Raw data** | A table of every de-duplicated article with its scores (relevance, credibility, deal type, cluster size, and so on). Good for checking why a story ranked where it did. |
+| **Pipeline logic** | A plain explanation of each step, the assumptions for this run, and an expandable per-feed fetch log showing which feeds were reached. |
+| **Downloads** | Buttons to download the raw data (CSV, JSON) and the newsletter (Excel, Word, PowerPoint, Markdown). |
+
+---
+
+## Deploy the demo app
 
 **Streamlit Community Cloud (free, ~2 minutes):**
 
 1. Push this repo to GitHub.
-2. Go to [share.streamlit.io](https://share.streamlit.io) → **New app** → pick
+2. Go to [share.streamlit.io](https://share.streamlit.io) -> **New app** -> pick
    this repo, branch, and `app.py`.
-3. *(Optional)* add `LLM_API_KEY` and `FMCG_LLM_MODEL` under **Advanced settings → Secrets** to
+3. *(Optional)* add `LLM_API_KEY` and `FMCG_LLM_MODEL` under **Advanced settings -> Secrets** to
    enable LLM summaries.
-4. Deploy, then paste the resulting URL into the [Links](#-links-final-deliverable)
+4. Deploy, then paste the resulting URL into the [Links](#links-final-deliverable)
    table above.
 
 The app needs open outbound internet to pull live feeds; on a restricted host it
@@ -188,12 +221,12 @@ automatically falls back to the bundled sample so it always renders.
 
 ---
 
-## 🗂️ Project structure
+## Project structure
 
 ```
 beroni/
 ├── app.py                  # Streamlit demo app
-├── scripts/run_pipeline.py # CLI: run pipeline → write all deliverables
+├── scripts/run_pipeline.py # CLI: run pipeline -> write all deliverables
 ├── src/
 │   ├── config.py           # sources, keyword vocab, credibility tiers, thresholds
 │   ├── ingest.py           # Stage 1 - RSS/Atom ingestion (stdlib parser)
@@ -212,7 +245,7 @@ beroni/
 
 ---
 
-## 🧪 Note on the sample dataset
+## Note on the sample dataset
 
 `data/sample_articles.json` is an **illustrative snapshot** seeded from publicly
 reported FMCG deals, with publication dates normalised to a recent window purely

@@ -57,7 +57,7 @@ def to_excel(newsletter, articles):
         cell.fill, cell.font = accent, head_font
     for i, item in enumerate(newsletter["lead_deals"], start=1):
         r = row0 + i
-        parties = " → ".join(p for p in [item.get("acquirer"), item.get("target")] if p)
+        parties = " -> ".join(p for p in [item.get("acquirer"), item.get("target")] if p)
         ws.cell(row=r, column=1, value=i)
         ws.cell(row=r, column=2, value=item["title"])
         ws.cell(row=r, column=3, value=item.get("deal_type"))
@@ -125,7 +125,7 @@ def to_word(newsletter):
         meta_bits = [item.get("deal_type")]
         if item.get("deal_value"):
             meta_bits.append(item["deal_value"])
-        parties = " → ".join(x for x in [item.get("acquirer"), item.get("target")] if x)
+        parties = " -> ".join(x for x in [item.get("acquirer"), item.get("target")] if x)
         if parties:
             meta_bits.append(parties)
         meta = doc.add_paragraph(" • ".join(b for b in meta_bits if b))
@@ -221,7 +221,7 @@ def to_pptx(newsletter):
         meta_bits = [item.get("deal_type")]
         if item.get("deal_value"):
             meta_bits.append(item["deal_value"])
-        parties = " → ".join(x for x in [item.get("acquirer"), item.get("target")] if x)
+        parties = " -> ".join(x for x in [item.get("acquirer"), item.get("target")] if x)
         if parties:
             meta_bits.append(parties)
         meta = textbox(s, 0.8, 1.9, 11.7, 0.6)

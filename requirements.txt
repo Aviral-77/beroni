@@ -1,5 +1,5 @@
 # FMCG Deal Intelligence - runtime dependencies
-# Core pipeline (ingest → clean → score → newsletter) uses only the standard
+# Core pipeline (ingest -> clean -> score -> newsletter) uses only the standard
 # library, so the dependency surface is small and deploys reliably.
 
 streamlit>=1.30,<1.40     # demo app (pinned below the starlette-server rewrite)

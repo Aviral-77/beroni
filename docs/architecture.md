@@ -6,7 +6,7 @@ and the README.
 
 ## Design goals
 
-1. **Minimal, inspectable "agent" flow** - `ingestion → cleaning → scoring →
+1. **Minimal, inspectable "agent" flow** - `ingestion -> cleaning -> scoring ->
    newsletter`. Each stage is a pure function over a list of article dicts and
    returns counts, so the whole funnel is observable.
 2. **Transparent, rule-based scoring** - no opaque model decides relevance or
@@ -37,7 +37,7 @@ Two passes:
 
 1. **Exact** - normalise the URL (lowercase host, strip tracking params and
    fragments) and the title (drop a trailing ` - Publisher`, lowercase, strip
-   punctuation). Identical normalised URL or title ⇒ drop.
+   punctuation). Identical normalised URL or title => drop.
 
 2. **Near-duplicate** - fingerprint each story as
    `(entities, content)` where `entities` = lowercased capitalised tokens +
@@ -68,9 +68,9 @@ Relevance is intentionally a **conjunction**: `deal_signal > 0 AND fmcg_signal >
 This is what filters out the two common false positives:
 
 - An **FMCG story with no deal** (a product launch, an earnings beat) - has an
-  FMCG signal but no deal signal → capped, dropped.
+  FMCG signal but no deal signal -> capped, dropped.
 - A **deal in another industry** (an enterprise-software acquisition) - has a
-  deal signal but no FMCG signal → capped, dropped.
+  deal signal but no FMCG signal -> capped, dropped.
 
 Title matches are weighted ×2 because headlines are the strongest cue. Ambiguous
 weak terms are handled deliberately: bare `raises/raised` is excluded from the
