@@ -142,7 +142,7 @@ def build_newsletter(scored, stage_stats=None, lookback_days=None, use_llm=True)
         f"{len(relevant)} relevant FMCG deals from {stage_stats.get('ingested', len(scored))} raw articles",
         f"{stage_stats.get('duplicates_removed', 0)} duplicate reports merged",
         f"{total_value_deals} deals with a disclosed value",
-        f"Deal mix — {top_types}" if top_types else "",
+        f"Deal mix - {top_types}" if top_types else "",
     ]
     stats_lines = [s for s in stats_lines if s]
 
@@ -216,7 +216,7 @@ def to_markdown(nl):
     if nl["brief_mentions"]:
         lines.append("## Also in the news")
         for it in nl["brief_mentions"]:
-            lines.append(f"- **{it['title']}** — {it.get('publisher')} ([link]({it.get('url')}))")
+            lines.append(f"- **{it['title']}** - {it.get('publisher')} ([link]({it.get('url')}))")
         lines.append("")
     lines.append("---")
     lines.append("### Methodology & assumptions")

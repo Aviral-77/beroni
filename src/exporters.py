@@ -61,8 +61,8 @@ def to_excel(newsletter, articles):
         ws.cell(row=r, column=1, value=i)
         ws.cell(row=r, column=2, value=item["title"])
         ws.cell(row=r, column=3, value=item.get("deal_type"))
-        ws.cell(row=r, column=4, value=item.get("deal_value") or "—")
-        ws.cell(row=r, column=5, value=parties or "—")
+        ws.cell(row=r, column=4, value=item.get("deal_value") or "-")
+        ws.cell(row=r, column=5, value=parties or "-")
         ws.cell(row=r, column=6, value=item["summary"])
         ws.cell(row=r, column=7, value=item.get("publisher"))
         ws.cell(row=r, column=8, value=f'{item.get("credibility")} ({item.get("credibility_tier")})')
@@ -136,7 +136,7 @@ def to_word(newsletter):
 
         src = doc.add_paragraph()
         s = src.add_run(
-            f"Source: {item.get('publisher')} — credibility "
+            f"Source: {item.get('publisher')} - credibility "
             f"{item.get('credibility')}/100 ({item.get('credibility_label')})"
             + (f" • corroborated by {item.get('corroboration_count')} other outlet(s)"
                if item.get("corroboration_count") else "")
@@ -152,7 +152,7 @@ def to_word(newsletter):
         doc.add_heading("Also in the news", level=1)
         for item in newsletter["brief_mentions"]:
             b = doc.add_paragraph(style="List Bullet")
-            br = b.add_run(f"{item['title']} — {item.get('publisher')}")
+            br = b.add_run(f"{item['title']} - {item.get('publisher')}")
             br.font.size = Pt(10)
 
     doc.add_heading("Methodology & assumptions", level=1)

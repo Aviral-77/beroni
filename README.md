@@ -6,11 +6,11 @@ user can skim in two minutes.
 
 It aggregates deal-related news, removes duplicates and near-duplicates, filters
 for genuine FMCG-deal relevance, checks basic source credibility, and emits a
-short, structured newsletter — plus the raw data and the newsletter in
+short, structured newsletter - plus the raw data and the newsletter in
 Excel / Word / PowerPoint.
 
 > **Pipeline / "agent" thinking:** `ingestion → cleaning → scoring → newsletter`
-> — four linear, inspectable stages, each easy to reason about and tune.
+> - four linear, inspectable stages, each easy to reason about and tune.
 
 ---
 
@@ -18,14 +18,14 @@ Excel / Word / PowerPoint.
 
 | Deliverable | Link |
 |---|---|
-| **Demo app** (Streamlit) | _<add your Streamlit Community Cloud URL here after deploying — see [Deploy](#-deploy-the-demo-app)>_ |
+| **Demo app** (Streamlit) | _<add your Streamlit Community Cloud URL here after deploying - see [Deploy](#-deploy-the-demo-app)>_ |
 | **Source code** (GitHub) | _<this repository>_ |
 | **Raw data** (CSV / JSON) | [`data/outputs/`](data/outputs/) |
 | **Newsletter** (Excel / Word / PPT / Markdown) | [`data/outputs/`](data/outputs/) |
 
 > The repository ships a ready-to-run sample so reviewers can see every output
 > immediately, and the app is one-click deployable. The live demo URL requires
-> connecting the repo to a host (Streamlit Cloud) under your own account —
+> connecting the repo to a host (Streamlit Cloud) under your own account -
 > instructions below.
 
 ---
@@ -58,22 +58,22 @@ flowchart LR
 
 ## 🧠 Pipeline explained (with the logic that matters)
 
-### 1 · Ingestion — `src/ingest.py`
+### 1 · Ingestion - `src/ingest.py`
 Pulls from **public RSS/Atom feeds only** (no paywalls, no scraping): Google
-News search feeds for FMCG deal queries — which conveniently attribute each item
-to its **original publisher** for credibility scoring — plus direct FMCG trade
+News search feeds for FMCG deal queries - which conveniently attribute each item
+to its **original publisher** for credibility scoring - plus direct FMCG trade
 press. Parsing uses the standard library (`requests` + `xml.etree`), so there are
 no heavyweight/compiled dependencies. Each item is normalised to
 `{title, summary, url, publisher, source_domain, published}` and filtered to a
 look-back window.
 
-### 2 · Cleaning & de-duplication — `src/clean.py`
+### 2 · Cleaning & de-duplication - `src/clean.py`
 The same deal is reported by many outlets; we want each **deal** once, while
 remembering how many independent outlets covered it.
 
 - **Exact dedup** on a normalised URL (tracking params stripped) and a
   normalised title.
-- **Near-duplicate merge** — the interesting part. Each story is *fingerprinted*
+- **Near-duplicate merge** - the interesting part. Each story is *fingerprinted*
   by its **named entities** (capitalised company/brand tokens) and **figures**
   (deal values), plus significant content words. Two reports are merged when
   they **share ≥ 2 entities** *and* their blended **overlap score** ≥ `0.50`,
@@ -85,14 +85,14 @@ remembering how many independent outlets covered it.
   ```
 
   Headlines are reworded freely across outlets, but the **company names, brands
-  and figures stay constant** — so entity overlap is the dominant, discriminating
+  and figures stay constant** - so entity overlap is the dominant, discriminating
   signal, and the "≥ 2 shared entities" gate stops two unrelated stories that
   merely share one common word from being merged. Clustering uses **union-find**,
   and each cluster keeps its **most credible, then most recent** report as the
   representative; the others become *corroboration*.
 
-### 3 · Scoring — `src/score.py`
-Three transparent, rule-based scorers (no black boxes — every score is
+### 3 · Scoring - `src/score.py`
+Three transparent, rule-based scorers (no black boxes - every score is
 explained by the `matched_*` fields attached to each article):
 
 - **Relevance (0–100), dual-gated.** An item must show **both** a *deal signal*
@@ -100,11 +100,11 @@ explained by the `matched_*` fields attached to each article):
   *FMCG signal* (a category like *beverage/personal care/snack* or a named
   consumer-goods company like *Nestlé/PepsiCo/Unilever*). **Title matches count
   double.** If either signal is missing the item is marked not-relevant and
-  capped — so generic business news and non-deal FMCG news fall below the
+  capped - so generic business news and non-deal FMCG news fall below the
   threshold and are dropped.
-- **Credibility (0–100), source-based.** A transparent tier allow-list —
+- **Credibility (0–100), source-based.** A transparent tier allow-list -
   global wire / financial press (Tier 1) > established trade press (Tier 2) >
-  general/market news (Tier 3) > press-release wires (flagged) > unknown — plus
+  general/market news (Tier 3) > press-release wires (flagged) > unknown - plus
   a **corroboration bonus** when several independent outlets report the same
   deal, minus a penalty for a **lone press release**. We rate the *source's
   standing*, not the truth of any individual claim.
@@ -112,7 +112,7 @@ explained by the `matched_*` fields attached to each article):
   **type** (acquisition / merger / divestiture / investment / funding / IPO) and
   **parties** (acquirer → target).
 
-### 4 · Newsletter — `src/newsletter.py`
+### 4 · Newsletter - `src/newsletter.py`
 Ranks by a composite of **relevance (45%), credibility (30%), recency (15%),
 corroboration (10%)**, splits into **lead deals** and an *"also in the news"*
 tail, writes a per-deal summary, and appends an at-a-glance intro and a
@@ -129,13 +129,13 @@ functional with zero credentials.
   *independent* outlets corroborate a deal. We do not fact-check individual
   statements.
 - **Press-release wires are flagged** (PR Newswire, Business Wire, GlobeNewswire,
-  …) and a lone, un-corroborated release is penalised — factual for
+  …) and a lone, un-corroborated release is penalised - factual for
   announcements, but primary PR rather than independent journalism.
 - **Deal value / parties are heuristic** (regex) and may be partial; the source
   link is always provided so a reader can verify.
 - **Coverage = what public feeds surface.** Private deals and paywalled scoops
   are out of scope by design.
-- **Everything is tunable and visible** — sources, keyword vocabularies,
+- **Everything is tunable and visible** - sources, keyword vocabularies,
   credibility tiers and thresholds all live in `src/config.py`, and the app
   shows the per-stage funnel and per-feed fetch log.
 - **Decision-support, not investment advice.**
@@ -149,10 +149,10 @@ git clone <this-repo>
 cd beroni
 pip install -r requirements.txt
 
-# Option A — the demo app
+# Option A - the demo app
 streamlit run app.py
 
-# Option B — generate every deliverable from the CLI
+# Option B - generate every deliverable from the CLI
 python scripts/run_pipeline.py                 # live feeds, falls back to sample
 python scripts/run_pipeline.py --sample        # force the bundled dataset
 python scripts/run_pipeline.py --no-llm --days 7 --min-relevance 40
@@ -160,7 +160,7 @@ python scripts/run_pipeline.py --no-llm --days 7 --min-relevance 40
 
 Outputs are written to `data/outputs/` (CSV, JSON, XLSX, DOCX, PPTX, MD).
 
-**Optional — LLM-written summaries:** set `LLM_API_KEY` and `FMCG_LLM_MODEL`
+**Optional - LLM-written summaries:** set `LLM_API_KEY` and `FMCG_LLM_MODEL`
 (the model identifier for your LLM provider). Without a key the app uses template
 summaries and works exactly the same otherwise.
 
@@ -196,12 +196,12 @@ beroni/
 ├── scripts/run_pipeline.py # CLI: run pipeline → write all deliverables
 ├── src/
 │   ├── config.py           # sources, keyword vocab, credibility tiers, thresholds
-│   ├── ingest.py           # Stage 1 — RSS/Atom ingestion (stdlib parser)
-│   ├── clean.py            # Stage 2 — exact + near-duplicate de-duplication
-│   ├── score.py            # Stage 3 — relevance + credibility + fact extraction
-│   ├── newsletter.py       # Stage 4 — ranking, summaries (LLM/template), draft
+│   ├── ingest.py           # Stage 1 - RSS/Atom ingestion (stdlib parser)
+│   ├── clean.py            # Stage 2 - exact + near-duplicate de-duplication
+│   ├── score.py            # Stage 3 - relevance + credibility + fact extraction
+│   ├── newsletter.py       # Stage 4 - ranking, summaries (LLM/template), draft
 │   ├── exporters.py        # CSV / JSON / Excel / Word / PowerPoint
-│   └── pipeline.py         # the "agent" — orchestrates the four stages
+│   └── pipeline.py         # the "agent" - orchestrates the four stages
 ├── data/
 │   ├── sample_articles.json   # illustrative offline dataset (clearly labelled)
 │   └── outputs/               # committed sample deliverables

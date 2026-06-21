@@ -98,7 +98,7 @@ FMCG_COMPANY_KEYWORDS = {
 CREDIBILITY_TIERS = {
     "tier1": {
         "score": 95,
-        "label": "Tier 1 — global wire / financial press",
+        "label": "Tier 1 - global wire / financial press",
         "domains": [
             "reuters.com", "bloomberg.com", "ft.com", "wsj.com", "apnews.com",
             "cnbc.com", "forbes.com", "nytimes.com", "economist.com",
@@ -108,7 +108,7 @@ CREDIBILITY_TIERS = {
     },
     "tier2": {
         "score": 85,
-        "label": "Tier 2 — established trade / industry press",
+        "label": "Tier 2 - established trade / industry press",
         "domains": [
             "fooddive.com", "grocerydive.com", "retaildive.com", "just-food.com",
             "just-drinks.com", "foodbev.com", "beveragedaily.com",
@@ -120,7 +120,7 @@ CREDIBILITY_TIERS = {
     },
     "tier3": {
         "score": 70,
-        "label": "Tier 3 — general / regional / market news",
+        "label": "Tier 3 - general / regional / market news",
         "domains": [
             "finance.yahoo.com", "yahoo.com", "seekingalpha.com", "benzinga.com",
             "investing.com", "thestreet.com", "cityam.com", "msn.com",
@@ -129,7 +129,7 @@ CREDIBILITY_TIERS = {
     },
     "press_release": {
         "score": 55,
-        "label": "Press-release wire (primary PR — flagged)",
+        "label": "Press-release wire (primary PR - flagged)",
         "domains": [
             "prnewswire.com", "businesswire.com", "globenewswire.com",
             "einpresswire.com", "accesswire.com", "prweb.com",

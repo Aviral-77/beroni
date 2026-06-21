@@ -18,10 +18,10 @@ with st.sidebar:
     st.markdown("---")
     st.markdown(
         "**Stages**\n\n"
-        "1. Ingest — public RSS/Atom feeds\n"
-        "2. Clean — exact + near-dup merge\n"
-        "3. Score — relevance + credibility\n"
-        "4. Newsletter — ranked, structured draft"
+        "1. Ingest - public RSS/Atom feeds\n"
+        "2. Clean - exact + near-dup merge\n"
+        "3. Score - relevance + credibility\n"
+        "4. Newsletter - ranked, structured draft"
     )
 
 
@@ -54,7 +54,7 @@ if result.source == "sample":
     st.info("📦 Using the bundled sample dataset (live feeds blocked or sample mode selected).", icon="ℹ️")
 else:
     ok = sum(1 for f in result.fetch_log if f["status"] == "ok")
-    st.success(f"🟢 Live mode — pulled from {ok} feed(s).", icon="✅")
+    st.success(f"🟢 Live mode - pulled from {ok} feed(s).", icon="✅")
 
 st.subheader("Pipeline funnel")
 c1, c2, c3, c4, c5 = st.columns(5)
@@ -86,14 +86,14 @@ with tab_data:
 with tab_logic:
     st.markdown("#### How each stage works")
     st.markdown(
-        "- **Ingestion** — public RSS/Atom only (Google News + trade press). No paywalls.\n"
-        f"- **De-duplication** — exact URL/title match, then near-dup clustering. Stories are "
+        "- **Ingestion** - public RSS/Atom only (Google News + trade press). No paywalls.\n"
+        f"- **De-duplication** - exact URL/title match, then near-dup clustering. Stories are "
         f"fingerprinted by named entities and figures; two reports merge when they share ≥2 entities "
         f"and their blended overlap ≥ **{config.THRESHOLDS['near_dup_similarity']}**.\n"
-        "- **Relevance** — must have both a deal signal and an FMCG signal (title ×2). "
+        "- **Relevance** - must have both a deal signal and an FMCG signal (title ×2). "
         "Items below the threshold are dropped.\n"
-        "- **Credibility** — source-tier allow-list + corroboration bonus − lone press-release penalty.\n"
-        "- **Ranking** — relevance 45%, credibility 30%, recency 15%, corroboration 10%."
+        "- **Credibility** - source-tier allow-list + corroboration bonus − lone press-release penalty.\n"
+        "- **Ranking** - relevance 45%, credibility 30%, recency 15%, corroboration 10%."
     )
     st.markdown("#### This run")
     for line in nl["methodology"]:

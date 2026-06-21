@@ -117,7 +117,7 @@ def deduplicate(articles):
         ai = exact_unique[i]
         for j in range(i + 1, n):
             aj = exact_unique[j]
-            # Require at least 2 shared entities — a single shared word isn't enough
+            # Require at least 2 shared entities - a single shared word isn't enough
             if len(ai["_entities"] & aj["_entities"]) < 2:
                 continue
             if similarity(ai, aj) >= threshold:

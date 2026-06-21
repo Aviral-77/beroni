@@ -1,6 +1,6 @@
 [
   {
-    "rank_score": 0.9251,
+    "rank_score": 0.9229,
     "relevance": 100,
     "credibility": 100,
     "is_relevant": true,
@@ -33,7 +33,7 @@
     ]
   },
   {
-    "rank_score": 0.8505,
+    "rank_score": 0.8483,
     "relevance": 94,
     "credibility": 99,
     "is_relevant": true,
@@ -65,7 +65,7 @@
     ]
   },
   {
-    "rank_score": 0.7893,
+    "rank_score": 0.7871,
     "relevance": 100,
     "credibility": 85,
     "is_relevant": true,
@@ -94,7 +94,7 @@
     "duplicate_urls": []
   },
   {
-    "rank_score": 0.7666,
+    "rank_score": 0.7644,
     "relevance": 100,
     "credibility": 85,
     "is_relevant": true,
@@ -123,7 +123,7 @@
     "duplicate_urls": []
   },
   {
-    "rank_score": 0.755,
+    "rank_score": 0.7528,
     "relevance": 100,
     "credibility": 85,
     "is_relevant": true,
@@ -154,7 +154,7 @@
     "duplicate_urls": []
   },
   {
-    "rank_score": 0.754,
+    "rank_score": 0.7518,
     "relevance": 100,
     "credibility": 95,
     "is_relevant": true,
@@ -185,7 +185,7 @@
     "duplicate_urls": []
   },
   {
-    "rank_score": 0.738,
+    "rank_score": 0.7358,
     "relevance": 78,
     "credibility": 99,
     "is_relevant": true,
@@ -216,7 +216,7 @@
     ]
   },
   {
-    "rank_score": 0.7342,
+    "rank_score": 0.732,
     "relevance": 100,
     "credibility": 70,
     "is_relevant": true,
@@ -247,7 +247,7 @@
     "duplicate_urls": []
   },
   {
-    "rank_score": 0.7188,
+    "rank_score": 0.7166,
     "relevance": 94,
     "credibility": 85,
     "is_relevant": true,
@@ -274,7 +274,7 @@
     "duplicate_urls": []
   },
   {
-    "rank_score": 0.7157,
+    "rank_score": 0.7135,
     "relevance": 67,
     "credibility": 99,
     "is_relevant": true,
@@ -305,7 +305,7 @@
     ]
   },
   {
-    "rank_score": 0.7117,
+    "rank_score": 0.7095,
     "relevance": 76,
     "credibility": 85,
     "is_relevant": true,
@@ -333,7 +333,7 @@
     "duplicate_urls": []
   },
   {
-    "rank_score": 0.7064,
+    "rank_score": 0.7042,
     "relevance": 94,
     "credibility": 85,
     "is_relevant": true,
@@ -362,7 +362,7 @@
     "duplicate_urls": []
   },
   {
-    "rank_score": 0.7018,
+    "rank_score": 0.6996,
     "relevance": 90,
     "credibility": 85,
     "is_relevant": true,
@@ -389,7 +389,7 @@
     "duplicate_urls": []
   },
   {
-    "rank_score": 0.6722,
+    "rank_score": 0.67,
     "relevance": 100,
     "credibility": 50,
     "is_relevant": true,
@@ -419,7 +419,7 @@
     "duplicate_urls": []
   },
   {
-    "rank_score": 0.6578,
+    "rank_score": 0.6556,
     "relevance": 78,
     "credibility": 85,
     "is_relevant": true,
@@ -448,7 +448,7 @@
     "duplicate_urls": []
   },
   {
-    "rank_score": 0.6546,
+    "rank_score": 0.6524,
     "relevance": 82,
     "credibility": 85,
     "is_relevant": true,
@@ -475,7 +475,7 @@
     "duplicate_urls": []
   },
   {
-    "rank_score": 0.6478,
+    "rank_score": 0.6456,
     "relevance": 69,
     "credibility": 85,
     "is_relevant": true,
@@ -502,7 +502,7 @@
     "duplicate_urls": []
   },
   {
-    "rank_score": 0.6377,
+    "rank_score": 0.6355,
     "relevance": 78,
     "credibility": 85,
     "is_relevant": true,
@@ -530,7 +530,7 @@
     "duplicate_urls": []
   },
   {
-    "rank_score": 0.5905,
+    "rank_score": 0.5883,
     "relevance": 94,
     "credibility": 50,
     "is_relevant": true,
@@ -557,7 +557,7 @@
     "duplicate_urls": []
   },
   {
-    "rank_score": 0.5847,
+    "rank_score": 0.5825,
     "relevance": 71,
     "credibility": 85,
     "is_relevant": true,
@@ -584,7 +584,7 @@
     "duplicate_urls": []
   },
   {
-    "rank_score": 0.4871,
+    "rank_score": 0.4849,
     "relevance": 56,
     "credibility": 47,
     "is_relevant": true,
@@ -612,7 +612,7 @@
     "duplicate_urls": []
   },
   {
-    "rank_score": 0.4778,
+    "rank_score": 0.4756,
     "relevance": 20,
     "credibility": 95,
     "is_relevant": false,
@@ -638,7 +638,7 @@
     "duplicate_urls": []
   },
   {
-    "rank_score": 0.4593,
+    "rank_score": 0.4571,
     "relevance": 20,
     "credibility": 85,
     "is_relevant": false,
@@ -663,7 +663,7 @@
     "duplicate_urls": []
   },
   {
-    "rank_score": 0.3687,
+    "rank_score": 0.3665,
     "relevance": 0,
     "credibility": 95,
     "is_relevant": false,
@@ -685,7 +685,7 @@
     "duplicate_urls": []
   },
   {
-    "rank_score": 0.3364,
+    "rank_score": 0.3342,
     "relevance": 20,
     "credibility": 50,
     "is_relevant": false,

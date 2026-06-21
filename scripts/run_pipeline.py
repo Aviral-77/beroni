@@ -1,32 +1,27 @@
 #!/usr/bin/env python3
-"""
-CLI entry point: run the full pipeline and write every deliverable to disk.
-
-Usage:
-    python scripts/run_pipeline.py [--sample] [--no-llm] [--days N]
-                                   [--min-relevance N] [--out DIR]
-
-By default it attempts live RSS ingestion and falls back to the bundled sample
-dataset if the network is unavailable. Outputs: CSV + JSON (raw data),
-XLSX + DOCX + PPTX (newsletter), and a markdown preview.
-"""
-
-from __future__ import annotations
+# Run the whole pipeline from the command line and write all the output files.
+#
+# Usage:
+#   python scripts/run_pipeline.py [--sample] [--no-llm] [--days N]
+#                                  [--min-relevance N] [--out DIR]
+#
+# By default it tries live RSS feeds and falls back to the bundled sample
+# dataset if the network is blocked.
 
 import argparse
 import os
 import sys
 
-# Allow running as `python scripts/run_pipeline.py` from the repo root.
+# So you can run this as `python scripts/run_pipeline.py` from the repo root.
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src import pipeline, exporters, newsletter  # noqa: E402
 
 
-def main() -> int:
+def main():
     ap = argparse.ArgumentParser(description="FMCG deal-intelligence newsletter pipeline")
     ap.add_argument("--sample", action="store_true", help="force the bundled sample dataset")
-    ap.add_argument("--no-llm", action="store_true", help="disable Claude summaries (template only)")
+    ap.add_argument("--no-llm", action="store_true", help="skip LLM summaries (template only)")
     ap.add_argument("--days", type=int, default=14, help="lookback window in days (live mode)")
     ap.add_argument("--min-relevance", type=int, default=35, help="minimum relevance score (0-100)")
     ap.add_argument("--out", default="data/outputs", help="output directory")
@@ -34,7 +29,7 @@ def main() -> int:
 
     os.makedirs(args.out, exist_ok=True)
 
-    print("Running pipeline (ingest → clean → score → newsletter)…")
+    print("Running pipeline: ingest, clean, score, newsletter...")
     result = pipeline.run_pipeline(
         use_live=not args.sample,
         lookback_days=args.days,

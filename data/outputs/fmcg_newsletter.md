@@ -1,13 +1,13 @@
 # FMCG Deal Intelligence
 *M&A & investment digest · 21 Jun 2026 · last 14 days · 21 deals*
 
-This edition tracks 21 fast-moving consumer goods deals reported over the last 14 days. The lead stories below are ranked by a blend of relevance, source credibility and recency; a longer tail of smaller moves follows.
+This edition tracks 21 FMCG deals reported over the last 14 days. Lead stories are ranked by relevance, credibility and recency.
 
 **At a glance**
-- 21 relevant FMCG deals surfaced from 30 raw articles
-- 5 duplicate/near-duplicate reports merged
+- 21 relevant FMCG deals from 30 raw articles
+- 5 duplicate reports merged
 - 8 deals with a disclosed value
-- Deal mix — Acquisition (13), Investment (3), Divestiture (2), Funding round (2)
+- Deal mix - Acquisition (13), Investment (3), Divestiture (2), Funding round (2)
 
 ## Lead deals
 ### 1. Mars strikes $36bn deal to buy Pringles maker Kellanova
@@ -41,21 +41,21 @@ Nestle has agreed to divest an underperforming frozen food business as the world
 <sub>Source: Reuters · credibility 95/100 (tier1) · [link](https://www.reuters.com/markets/deals/nestle-frozen-food-divestiture-2026)</sub>
 
 ## Also in the news
-- **Mondelez explores potential acquisition of Hershey, sources say** — Bloomberg ([link](https://www.bloomberg.com/news/articles/2026-06-13/mondelez-hershey-approach))
-- **Private equity firm takes majority stake in personal care brand** — City A.M. ([link](https://www.cityam.com/private-equity-personal-care-stake-2026/))
-- **Campbell completes $2.7 billion acquisition of premium sauce maker** — Just Food ([link](https://www.just-food.com/news/campbell-sauce-acquisition-completed/))
-- **Unilever sets out plans to spin off ice cream business in stock-market listing** — Financial Times ([link](https://www.ft.com/content/unilever-ice-cream-spinoff-2026))
-- **Functional beverage start-up raises $75 million Series C led by consumer fund** — FoodBev Media ([link](https://www.foodbev.com/news/functional-beverage-startup-series-c/))
-- **Lactalis to buy regional cheese business, expanding dairy footprint** — DairyReporter ([link](https://www.dairyreporter.com/Article/2026/06/10/lactalis-cheese-acquisition))
-- **Brewer agrees to acquire craft beer maker in regional consolidation** — Just Drinks ([link](https://www.just-drinks.com/news/brewer-craft-beer-acquisition/))
-- **Pet food maker acquired by consumer goods group in $850 million deal** — Pet Food Industry ([link](https://www.petfoodindustry.com/news/pet-food-acquisition-850-million-2026))
+- **Mondelez explores potential acquisition of Hershey, sources say** - Bloomberg ([link](https://www.bloomberg.com/news/articles/2026-06-13/mondelez-hershey-approach))
+- **Private equity firm takes majority stake in personal care brand** - City A.M. ([link](https://www.cityam.com/private-equity-personal-care-stake-2026/))
+- **Campbell completes $2.7 billion acquisition of premium sauce maker** - Just Food ([link](https://www.just-food.com/news/campbell-sauce-acquisition-completed/))
+- **Unilever sets out plans to spin off ice cream business in stock-market listing** - Financial Times ([link](https://www.ft.com/content/unilever-ice-cream-spinoff-2026))
+- **Functional beverage start-up raises $75 million Series C led by consumer fund** - FoodBev Media ([link](https://www.foodbev.com/news/functional-beverage-startup-series-c/))
+- **Lactalis to buy regional cheese business, expanding dairy footprint** - DairyReporter ([link](https://www.dairyreporter.com/Article/2026/06/10/lactalis-cheese-acquisition))
+- **Brewer agrees to acquire craft beer maker in regional consolidation** - Just Drinks ([link](https://www.just-drinks.com/news/brewer-craft-beer-acquisition/))
+- **Pet food maker acquired by consumer goods group in $850 million deal** - Pet Food Industry ([link](https://www.petfoodindustry.com/news/pet-food-acquisition-850-million-2026))
 
 ---
 ### Methodology & assumptions
-- Ingestion: public RSS/Atom feeds (Google News deal queries + FMCG trade press), filtered to the last 14 days. No paywalled or private sources.
-- De-duplication: exact match on normalised URL/title, then near-duplicate clustering. Each story is fingerprinted by its named entities (companies, brands) and figures plus significant content words; two reports merge when they share at least 2 entities AND their blended overlap (entity + content overlap coefficients) reaches 0.50. The most credible/recent report is kept as the representative. 5 of 30 articles merged this run.
-- Relevance: an item must show BOTH a deal signal (acquire/merger/stake/funding…) and an FMCG signal (category or named consumer-goods company); title matches weighted x2. Items scoring below 35/100 are dropped from the draft.
-- Credibility: transparent source-tier allow-list (global wire > trade press > general > press-release wires), plus a corroboration bonus when multiple independent outlets report the same deal, and a penalty for lone press releases. We rate the SOURCE, not each claim.
-- Ranking: composite of relevance (45%), credibility (30%), recency (15%) and corroboration (10%).
-- Summaries: template-generated from extracted deal facts + the source blurb (no LLM key set).
-- Assumptions & limits: deal value/parties are extracted heuristically (regex) and may be incomplete; coverage reflects what public feeds surface; this is decision-support, not advice.
+- Ingestion: public RSS/Atom feeds (Google News + FMCG trade press), last 14 days.
+- De-duplication: exact URL/title match, then near-dup clustering by entity overlap (threshold 0.5). 5 of 30 articles merged.
+- Relevance: requires a deal signal AND an FMCG signal (title ×2). Items below 35/100 are dropped.
+- Credibility: source-tier allow-list + corroboration bonus − lone press-release penalty.
+- Ranking: relevance 45%, credibility 30%, recency 15%, corroboration 10%.
+- Summaries: template from extracted deal facts + source blurb (no LLM_API_KEY set).
+- Deal value/parties are regex heuristics and may be incomplete. Decision-support only.
