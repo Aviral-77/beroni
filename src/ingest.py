@@ -1,17 +1,3 @@
-"""
-Stage 1 — INGESTION.
-
-Pulls deal-related news from public RSS/Atom feeds (Google News queries +
-trade-press feeds) and normalises every item into a flat `Article` dict.
-
-We deliberately avoid the `feedparser` dependency (it drags in a legacy
-`sgmllib3k` package that fails to build in some sandboxes). Instead we parse
-with the standard library `xml.etree.ElementTree`, which handles both RSS 2.0
-and Atom once namespaces are accounted for.
-"""
-
-from __future__ import annotations
-
 import hashlib
 import re
 import time
@@ -22,24 +8,18 @@ from xml.etree import ElementTree as ET
 
 try:
     import requests
-except Exception:  # pragma: no cover - requests is in requirements
+except Exception:
     requests = None
 
 from . import config
 
-USER_AGENT = (
-    "Mozilla/5.0 (compatible; FMCG-Intel-Newsletter/1.0; "
-    "+https://github.com/) Python-urllib"
-)
-
-# Atom namespace (RSS 2.0 uses no namespace for the elements we read)
+USER_AGENT = "Mozilla/5.0 (compatible; FMCG-Intel-Newsletter/1.0) Python-urllib"
 _ATOM = "{http://www.w3.org/2005/Atom}"
+_TAG_RE = re.compile(r"<[^>]+>")
+_WS_RE = re.compile(r"\s+")
 
 
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
-def _domain(url: str) -> str:
+def _domain(url):
     try:
         host = urlparse(url).netloc.lower()
         return host[4:] if host.startswith("www.") else host
@@ -47,19 +27,16 @@ def _domain(url: str) -> str:
         return ""
 
 
-def _parse_date(value: str | None) -> datetime | None:
-    """Parse RFC-822 (RSS) or ISO-8601 (Atom) dates -> aware UTC datetime."""
+def _parse_date(value):
     if not value:
         return None
     value = value.strip()
-    # RFC-822, e.g. "Tue, 17 Jun 2025 09:30:00 GMT"
     try:
         dt = parsedate_to_datetime(value)
         if dt is not None:
             return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
     except Exception:
         pass
-    # ISO-8601, e.g. "2025-06-17T09:30:00Z"
     try:
         dt = datetime.fromisoformat(value.replace("Z", "+00:00"))
         return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
@@ -67,11 +44,7 @@ def _parse_date(value: str | None) -> datetime | None:
         return None
 
 
-_TAG_RE = re.compile(r"<[^>]+>")
-_WS_RE = re.compile(r"\s+")
-
-
-def _strip_html(text: str | None) -> str:
+def _strip_html(text):
     if not text:
         return ""
     text = _TAG_RE.sub(" ", text)
@@ -82,24 +55,21 @@ def _strip_html(text: str | None) -> str:
     return _WS_RE.sub(" ", text).strip()
 
 
-def _mk_id(url: str, title: str) -> str:
+def _mk_id(url, title):
     return hashlib.sha1(f"{url}|{title}".encode("utf-8", "ignore")).hexdigest()[:16]
 
 
-def _text(el) -> str:
+def _text(el):
     return (el.text or "").strip() if el is not None else ""
 
 
-# ---------------------------------------------------------------------------
-# Feed fetching / parsing
-# ---------------------------------------------------------------------------
-def fetch_raw(url: str, timeout: int = 15) -> bytes | None:
-    """Fetch a feed URL, returning raw bytes (or None on failure)."""
+def fetch_raw(url, timeout=15):
     if requests is None:
         return None
     try:
         resp = requests.get(
-            url, headers={"User-Agent": USER_AGENT, "Accept": "application/rss+xml, application/xml, text/xml, */*"},
+            url,
+            headers={"User-Agent": USER_AGENT, "Accept": "application/rss+xml, */*"},
             timeout=timeout,
         )
         if resp.status_code == 200 and resp.content:
@@ -109,15 +79,13 @@ def fetch_raw(url: str, timeout: int = 15) -> bytes | None:
     return None
 
 
-def parse_feed(raw: bytes, source_name: str, source_type: str) -> list[dict]:
-    """Parse raw RSS/Atom bytes into a list of normalised article dicts."""
-    out: list[dict] = []
+def parse_feed(raw, source_name, source_type):
+    out = []
     try:
         root = ET.fromstring(raw)
     except ET.ParseError:
         return out
 
-    # RSS 2.0: <rss><channel><item>...   |   Atom: <feed><entry>...
     items = root.findall(".//item")
     is_atom = False
     if not items:
@@ -137,7 +105,6 @@ def parse_feed(raw: bytes, source_name: str, source_type: str) -> list[dict]:
             link = _text(it.find("link"))
             summary = _text(it.find("description"))
             published = _text(it.find("pubDate"))
-            # Google News embeds the real publisher in <source url="...">Name</source>
             src_el = it.find("source")
             pub_source = _text(src_el)
             if src_el is not None and not link:
@@ -148,9 +115,7 @@ def parse_feed(raw: bytes, source_name: str, source_type: str) -> list[dict]:
         if not title or not link:
             continue
 
-        # For Google News, the original publisher is the <source>, otherwise the feed
         publisher = pub_source or source_name
-        # Google News titles often end with " - Publisher"; capture that too
         if source_type == "google_news" and not pub_source and " - " in title:
             publisher = title.rsplit(" - ", 1)[-1].strip()
 
@@ -167,28 +132,14 @@ def parse_feed(raw: bytes, source_name: str, source_type: str) -> list[dict]:
     return out
 
 
-# ---------------------------------------------------------------------------
-# Public entry point
-# ---------------------------------------------------------------------------
-def ingest(
-    sources: list[dict] | None = None,
-    lookback_days: int | None = None,
-    max_per_feed: int | None = None,
-    polite_delay: float = 0.0,
-) -> tuple[list[dict], list[dict]]:
-    """
-    Fetch and normalise articles from all configured sources.
-
-    Returns (articles, fetch_log) where fetch_log records per-feed outcomes so
-    the UI can show exactly what was reached and what was blocked.
-    """
+def ingest(sources=None, lookback_days=None, max_per_feed=None, polite_delay=0.0):
     sources = sources if sources is not None else config.all_sources()
     lookback_days = lookback_days if lookback_days is not None else config.THRESHOLDS["lookback_days"]
     max_per_feed = max_per_feed if max_per_feed is not None else config.THRESHOLDS["max_items_per_feed"]
 
     cutoff = datetime.now(timezone.utc) - timedelta(days=lookback_days)
-    articles: list[dict] = []
-    log: list[dict] = []
+    articles = []
+    log = []
 
     for src in sources:
         raw = fetch_raw(src["url"])
@@ -202,7 +153,6 @@ def ingest(
             dt = _parse_date(art["published_raw"])
             art["published_dt"] = dt
             art["published"] = dt.isoformat() if dt else ""
-            # Keep undated items (some trade feeds omit dates) but drop clearly old ones
             if dt is not None and dt < cutoff:
                 continue
             articles.append(art)
@@ -214,11 +164,7 @@ def ingest(
     return articles, log
 
 
-def load_sample(path: str = "data/sample_articles.json") -> tuple[list[dict], list[dict]]:
-    """
-    Load the bundled illustrative dataset (used when live feeds are blocked,
-    e.g. in a restricted sandbox, so the demo always has something to show).
-    """
+def load_sample(path="data/sample_articles.json"):
     import json
     import os
 

@@ -1,23 +1,8 @@
-"""
-Output / EXPORT layer.
-
-Turns the pipeline result into the deliverable formats the brief asks for:
-
-  • raw data            → CSV and JSON
-  • structured content  → Excel (.xlsx), Word (.docx) and PowerPoint (.pptx)
-
-Each exporter returns raw ``bytes`` so the Streamlit app can offer them as
-download buttons and the CLI can write them to disk — no shared temp-file state.
-"""
-
-from __future__ import annotations
-
 import csv
 import io
 import json
 from datetime import datetime, timezone
 
-# Columns we expose in the "raw data" deliverable, in a sensible order.
 RAW_FIELDS = [
     "rank_score", "relevance", "credibility", "is_relevant", "deal_type",
     "deal_value", "acquirer", "target", "title", "publisher", "source_domain",
@@ -27,18 +12,13 @@ RAW_FIELDS = [
 ]
 
 
-def _flat(value) -> str:
+def _flat(value):
     if isinstance(value, (list, tuple)):
         return "; ".join(str(v) for v in value)
-    if value is None:
-        return ""
-    return str(value)
+    return "" if value is None else str(value)
 
 
-# ---------------------------------------------------------------------------
-# Raw data
-# ---------------------------------------------------------------------------
-def to_csv(articles: list[dict]) -> bytes:
+def to_csv(articles):
     buf = io.StringIO()
     writer = csv.DictWriter(buf, fieldnames=RAW_FIELDS, extrasaction="ignore")
     writer.writeheader()
@@ -47,18 +27,12 @@ def to_csv(articles: list[dict]) -> bytes:
     return buf.getvalue().encode("utf-8")
 
 
-def to_json(articles: list[dict]) -> bytes:
-    cleaned = []
-    for art in articles:
-        row = {k: art.get(k) for k in RAW_FIELDS}
-        cleaned.append(row)
+def to_json(articles):
+    cleaned = [{k: art.get(k) for k in RAW_FIELDS} for art in articles]
     return json.dumps(cleaned, indent=2, ensure_ascii=False).encode("utf-8")
 
 
-# ---------------------------------------------------------------------------
-# Excel
-# ---------------------------------------------------------------------------
-def to_excel(newsletter: dict, articles: list[dict]) -> bytes:
+def to_excel(newsletter, articles):
     from openpyxl import Workbook
     from openpyxl.styles import Font, Alignment, PatternFill
     from openpyxl.utils import get_column_letter
@@ -68,7 +42,6 @@ def to_excel(newsletter: dict, articles: list[dict]) -> bytes:
     head_font = Font(bold=True, color="FFFFFF")
     title_font = Font(bold=True, size=14, color="1F4E79")
 
-    # --- Sheet 1: Newsletter (lead deals) -----------------------------------
     ws = wb.active
     ws.title = "Newsletter"
     ws["A1"] = newsletter["title"]
@@ -102,7 +75,6 @@ def to_excel(newsletter: dict, articles: list[dict]) -> bytes:
         for cell in row:
             cell.alignment = Alignment(vertical="top", wrap_text=True)
 
-    # --- Sheet 2: Raw data ---------------------------------------------------
     ws2 = wb.create_sheet("Raw data")
     for c, h in enumerate(RAW_FIELDS, start=1):
         cell = ws2.cell(row=1, column=c, value=h)
@@ -113,7 +85,6 @@ def to_excel(newsletter: dict, articles: list[dict]) -> bytes:
     for c in range(1, len(RAW_FIELDS) + 1):
         ws2.column_dimensions[get_column_letter(c)].width = 22
 
-    # --- Sheet 3: Methodology ------------------------------------------------
     ws3 = wb.create_sheet("Methodology")
     ws3.column_dimensions["A"].width = 110
     ws3["A1"] = "Pipeline & assumptions"
@@ -126,10 +97,7 @@ def to_excel(newsletter: dict, articles: list[dict]) -> bytes:
     return out.getvalue()
 
 
-# ---------------------------------------------------------------------------
-# Word
-# ---------------------------------------------------------------------------
-def to_word(newsletter: dict) -> bytes:
+def to_word(newsletter):
     from docx import Document
     from docx.shared import Pt, RGBColor
     from docx.enum.text import WD_ALIGN_PARAGRAPH
@@ -198,14 +166,10 @@ def to_word(newsletter: dict) -> bytes:
     return out.getvalue()
 
 
-# ---------------------------------------------------------------------------
-# PowerPoint
-# ---------------------------------------------------------------------------
-def to_pptx(newsletter: dict) -> bytes:
+def to_pptx(newsletter):
     from pptx import Presentation
     from pptx.util import Inches, Pt
     from pptx.dml.color import RGBColor
-    from pptx.enum.text import PP_ALIGN
 
     prs = Presentation()
     prs.slide_width = Inches(13.333)
@@ -219,7 +183,6 @@ def to_pptx(newsletter: dict) -> bytes:
         tb.text_frame.word_wrap = True
         return tb.text_frame
 
-    # --- Title slide ---------------------------------------------------------
     s = prs.slides.add_slide(blank)
     tf = textbox(s, 0.8, 2.4, 11.7, 2.2)
     tf.text = newsletter["title"]
@@ -232,7 +195,6 @@ def to_pptx(newsletter: dict) -> bytes:
     p.font.italic = True
     p.font.color.rgb = grey
 
-    # --- Summary slide -------------------------------------------------------
     s = prs.slides.add_slide(blank)
     tf = textbox(s, 0.8, 0.5, 11.7, 1.0)
     tf.text = "This edition at a glance"
@@ -248,7 +210,6 @@ def to_pptx(newsletter: dict) -> bytes:
         pp.font.size = Pt(14)
         pp.font.color.rgb = grey
 
-    # --- One slide per lead deal --------------------------------------------
     for i, item in enumerate(newsletter["lead_deals"], start=1):
         s = prs.slides.add_slide(blank)
         head = textbox(s, 0.8, 0.5, 11.7, 1.4)
@@ -281,7 +242,6 @@ def to_pptx(newsletter: dict) -> bytes:
         foot.paragraphs[0].font.size = Pt(10)
         foot.paragraphs[0].font.color.rgb = grey
 
-    # --- Methodology slide ---------------------------------------------------
     s = prs.slides.add_slide(blank)
     tf = textbox(s, 0.8, 0.5, 11.7, 1.0)
     tf.text = "Methodology & assumptions"
@@ -301,8 +261,7 @@ def to_pptx(newsletter: dict) -> bytes:
     return out.getvalue()
 
 
-def export_all(newsletter: dict, articles: list[dict]) -> dict[str, bytes]:
-    """Convenience: build every artefact at once. Returns name → bytes."""
+def export_all(newsletter, articles):
     stamp = datetime.now(timezone.utc).strftime("%Y%m%d")
     return {
         f"fmcg_deals_raw_{stamp}.csv": to_csv(articles),

@@ -1,49 +1,18 @@
-"""
-Stage 2 — CLEANING & DE-DUPLICATION.
-
-The same deal is typically reported by many outlets (a wire story gets picked
-up verbatim, headlines get lightly reworded). We collapse these so the
-newsletter shows each *deal* once, while remembering how many independent
-outlets covered it (corroboration → a credibility signal later).
-
-Two passes, both dependency-free and fully transparent:
-
-  1. EXACT dedup     — identical normalised URL or normalised title.
-  2. NEAR-DUP merge  — fingerprint each story by its named entities (companies,
-                       brands) and figures plus significant content words, then
-                       merge two reports when they share >= 2 entities AND their
-                       blended similarity reaches the threshold, where:
-                         similarity = 0.5 * entity_overlap + 0.5 * content_overlap
-                         overlap(A, B) = |A ∩ B| / min(|A|, |B|)   (overlap coef)
-                       Outlets reword headlines freely but reuse the same company
-                       names and figures, so entity overlap is the discriminating
-                       signal. Clustering uses a union-find structure so
-                       transitively-similar items end up in one group; the cluster
-                       keeps the most credible, then most recent item as its
-                       representative, and the rest become corroboration.
-"""
-
-from __future__ import annotations
-
 import re
 from urllib.parse import urlparse, parse_qsl, urlencode, urlunparse
 
 from . import config
-from .score import source_credibility  # base credibility for choosing a representative
+from .score import source_credibility
 
 _PUNCT_RE = re.compile(r"[^\w\s]")
 _WS_RE = re.compile(r"\s+")
 _TRACKING_PREFIXES = ("utm_", "fbclid", "gclid", "mc_", "ref", "cmpid", "ocid")
 
-# Capitalised proper nouns (entities) and monetary/numeric figures are the
-# strongest fingerprint of "same story across outlets".
 _ENTITY_RE = re.compile(r"\b[A-Z][A-Za-z&.\-']+\b")
 _NUM_RE = re.compile(r"\d+(?:\.\d+)?")
 _WORD_RE = re.compile(r"[a-z]{4,}")
 
-# Very common words that add no discriminating power for similarity. Includes
-# adjectives/nouns that frequently appear title-cased (sentence-initial or in
-# headlines) and would otherwise masquerade as identifying "entities".
+# Common words that would otherwise appear as "entities" in capitalised headlines
 _STOP = {
     "the", "a", "an", "to", "of", "in", "on", "for", "and", "or", "with",
     "as", "at", "by", "from", "its", "is", "are", "be", "will", "has", "have",
@@ -56,11 +25,7 @@ _STOP = {
 }
 
 
-# ---------------------------------------------------------------------------
-# Normalisation
-# ---------------------------------------------------------------------------
-def normalize_url(url: str) -> str:
-    """Lowercase host, drop tracking query params and fragments/trailing slash."""
+def normalize_url(url):
     try:
         p = urlparse(url)
         host = p.netloc.lower()
@@ -73,26 +38,17 @@ def normalize_url(url: str) -> str:
         return url.strip().lower()
 
 
-def normalize_title(title: str) -> str:
-    """Lowercase, strip a trailing ' - Publisher', remove punctuation/whitespace."""
+def normalize_title(title):
     t = title or ""
-    if " - " in t:                      # drop Google-News style publisher suffix
+    if " - " in t:
         head = t.rsplit(" - ", 1)[0]
-        if len(head) > 20:              # only if it leaves a meaningful headline
+        if len(head) > 20:
             t = head
     t = _PUNCT_RE.sub(" ", t.lower())
     return _WS_RE.sub(" ", t).strip()
 
 
-def _fingerprint(title: str, summary: str) -> tuple[frozenset[str], frozenset[str]]:
-    """
-    Build a story fingerprint from title + summary.
-
-    Returns (entities, content) where:
-      entities = lowercased proper-noun tokens + numeric figures (the names and
-                 amounts that identify *which deal* this is), and
-      content  = entities plus significant content words (≥4 chars, non-stop).
-    """
+def _fingerprint(title, summary):
     text = f"{title} {summary}"
     entities = {w.lower() for w in _ENTITY_RE.findall(text)} - _STOP
     entities |= set(_NUM_RE.findall(text))
@@ -100,25 +56,13 @@ def _fingerprint(title: str, summary: str) -> tuple[frozenset[str], frozenset[st
     return frozenset(entities), frozenset(content)
 
 
-# ---------------------------------------------------------------------------
-# Similarity
-# ---------------------------------------------------------------------------
-def _overlap(a: frozenset[str], b: frozenset[str]) -> float:
-    """Overlap coefficient |A∩B| / min(|A|,|B|) — robust to length differences."""
+def _overlap(a, b):
     if not a or not b:
         return 0.0
     return len(a & b) / min(len(a), len(b))
 
 
-def similarity(a: dict, b: dict) -> float:
-    """
-    Blended near-duplicate similarity in [0, 1]:
-      • shared named entities / figures (the deal's fingerprint), and
-      • shared significant content,
-    each as an overlap coefficient. Different outlets reword headlines freely
-    but reuse the same company names, brands and figures — so entity overlap is
-    the dominant, discriminating signal.
-    """
+def similarity(a, b):
     ent = _overlap(a["_entities"], b["_entities"])
     content = _overlap(a["_content"], b["_content"])
     return (
@@ -127,43 +71,29 @@ def similarity(a: dict, b: dict) -> float:
     )
 
 
-# ---------------------------------------------------------------------------
-# Union-Find
-# ---------------------------------------------------------------------------
 class _UF:
-    def __init__(self, n: int):
+    def __init__(self, n):
         self.parent = list(range(n))
 
-    def find(self, x: int) -> int:
+    def find(self, x):
         while self.parent[x] != x:
             self.parent[x] = self.parent[self.parent[x]]
             x = self.parent[x]
         return x
 
-    def union(self, a: int, b: int) -> None:
+    def union(self, a, b):
         ra, rb = self.find(a), self.find(b)
         if ra != rb:
             self.parent[rb] = ra
 
 
-# ---------------------------------------------------------------------------
-# Public entry point
-# ---------------------------------------------------------------------------
-def deduplicate(articles: list[dict]) -> tuple[list[dict], dict]:
-    """
-    Collapse exact and near-duplicate articles.
-
-    Returns (representatives, stats). Each representative gains:
-        cluster_size          – number of articles merged into it
-        corroborating_sources – sorted list of distinct publisher domains
-        duplicate_urls        – the other URLs that reported the same story
-    """
+def deduplicate(articles):
     stats = {"ingested": len(articles)}
 
-    # ---- Pass 1: exact dedup on normalised URL, then normalised title -------
-    seen_url: dict[str, dict] = {}
-    seen_title: dict[str, dict] = {}
-    exact_unique: list[dict] = []
+    # Pass 1: exact dedup on normalised URL then normalised title
+    seen_url = {}
+    seen_title = {}
+    exact_unique = []
     for art in articles:
         nurl = normalize_url(art.get("url", ""))
         ntitle = normalize_title(art.get("title", ""))
@@ -179,32 +109,27 @@ def deduplicate(articles: list[dict]) -> tuple[list[dict], dict]:
         exact_unique.append(art)
     stats["after_exact_dedup"] = len(exact_unique)
 
-    # ---- Pass 2: near-duplicate clustering ----------------------------------
+    # Pass 2: near-duplicate clustering via entity-overlap fingerprinting
     n = len(exact_unique)
     uf = _UF(n)
     threshold = config.THRESHOLDS["near_dup_similarity"]
-    # O(n^2) pairwise — fine for the hundreds-of-items scale this operates at.
     for i in range(n):
         ai = exact_unique[i]
         for j in range(i + 1, n):
             aj = exact_unique[j]
-            # The same deal reported by different outlets shares ≥2 identifying
-            # entities/figures (e.g. acquirer + target, or company + amount).
-            # A single shared common word is not enough — this guards against
-            # merging two unrelated stories that happen to share one term.
+            # Require at least 2 shared entities — a single shared word isn't enough
             if len(ai["_entities"] & aj["_entities"]) < 2:
                 continue
             if similarity(ai, aj) >= threshold:
                 uf.union(i, j)
 
-    clusters: dict[int, list[int]] = {}
+    clusters = {}
     for idx in range(n):
         clusters.setdefault(uf.find(idx), []).append(idx)
 
-    representatives: list[dict] = []
+    representatives = []
     for members in clusters.values():
         arts = [exact_unique[m] for m in members]
-        # representative = highest credibility, then most recent
         rep = max(arts, key=lambda a: (
             source_credibility(a.get("source_domain", ""), a.get("publisher", ""))["score"],
             a.get("published_dt") or _min_dt(),
