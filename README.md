@@ -57,7 +57,7 @@ The fetch path in `src/ingest.py` is:
 ```
 ingest()                       # loops over every feed
   -> fetch_raw(url)            # HTTP GET -> raw XML bytes
-       -> parse_feed(raw, ...) # stdlib xml.etree -> list of articles
+       -> parse_feed(raw) # stdlib xml.etree -> list of articles
             -> date filter      # drop anything older than the look-back window
 ```
 
@@ -102,7 +102,7 @@ Three transparent, rule-based scorers (no black boxes - every score is
 explained by the `matched_*` fields attached to each article):
 
 - **Relevance (0–100), dual-gated.** An item must show **both** a *deal signal*
-  (`acquire`, `merger`, `stake`, `divest`, `funding round`, `IPO`…) **and** an
+  (`acquire`, `merger`, `stake`, `divest`, `funding round`, `IPO) and an
   *FMCG signal* (a category like *beverage/personal care/snack* or a named
   consumer-goods company like *Nestlé/PepsiCo/Unilever*). **Title matches count
   double.** If either signal is missing the item is marked not-relevant and
